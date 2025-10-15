@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Redefine - Transform Your Career Journey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/hero-styles.css" rel="stylesheet">
+    <style>
+
+      .navbar {
+  transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+  backdrop-filter: blur(0px);
+  background-color: rgba(255, 255, 255, 0.7); /* semi-transparent for blur effect */
+}
+
+        
+      #awardCarousel::-webkit-scrollbar {
+                display: none;
+            }
+
+   
+
+        .blog-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.blog-action {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.blog-action:hover {
+    color: #0056b3;
+}
+
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE and older Edge */
+html {
+    -ms-overflow-style: none;
+}
+    </style>
+</head>
+<body style="padding-top:72px; margin:0;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+    <img src="/images/cr_logo.png" alt="Career Redefine Logo" height="40">
+</a>
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/workshops">Workshops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div id="authSection">
+                        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+                    </div>
+                    <div id="userSection" style="display: none;">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+                                <img id="navProfileAvatar" src="/images/default-avatar.png" alt="Profile" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" onerror="this.src='/images/default-avatar.png';">
+                            </a>
+<ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+    <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+</ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+<!-- TRUST & ACCURACY SECTION -->
+<section id="whySection" class="py-5" style="background:#f8f9fa;">
+  <div class="container">
+    <div class="row text-center mb-4">
+      <h2 class="fw-bold">Why Career Redefine?</h2>
+      <p class="text-muted">Trusted guidance, accurate roadmaps, and real outcomes.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="p-4 bg-white shadow-sm h-100 rounded">
+          <div class="mb-2"><i class="fa-solid fa-shield-heart text-primary"></i></div>
+          <h5 class="fw-bold">Trusted by Learners</h5>
+          <p class="text-muted mb-0">Transparent mentorship and learner-first approach.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 bg-white shadow-sm h-100 rounded">
+          <div class="mb-2"><i class="fa-solid fa-bullseye text-success"></i></div>
+          <h5 class="fw-bold">Accurate Guidance</h5>
+          <p class="text-muted mb-0">Clear roadmaps and practical projects to grow fast.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 bg-white shadow-sm h-100 rounded">
+          <div class="mb-2"><i class="fa-solid fa-rocket text-danger"></i></div>
+          <h5 class="fw-bold">Career Outcomes</h5>
+          <p class="text-muted mb-0">Portfolio, interview prep, and job assistance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT CRASH COURSES -->
+<section id="recentCrashSection" class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="fw-bold mb-0">Recent Crash Courses</h3>
+      <a class="btn btn-link" href="/courses">View all</a>
+    </div>
+    <div class="row" id="recentCrashCourses">
+      <!-- Rendered by js/home.js -->
+    </div>
+  </div>
+  <hr class="my-0" />
+</section>
+
+<!-- RECENT WORKSHOPS -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="fw-bold mb-0">Upcoming Workshops</h3>
+      <a class="btn btn-link" href="/workshops">View all</a>
+    </div>
+    <div class="row" id="recentWorkshops">
+      <!-- Rendered by js/home.js -->
+    </div>
+  </div>
+</section>
+
+      
+
+    <footer style="
+background: linear-gradient(
+    90deg, 
+    rgba(15, 132, 180, 0.9) 0%, 
+    rgba(10, 92, 125, 0.95) 100%
+) !important;
+color: white;
+padding: 3rem 0;
+">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <h5 class="fw-bold mb-3">
+                <i class="fas fa-rocket me-2"></i>Career Redefine
+            </h5>
+            <p class="mb-3">Transforming careers through innovative learning and professional development.</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61564699643555" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/career-redefine/" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/career_redefine.ai/" class="text-white"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-2 mb-4">
+            <h6 class="fw-bold mb-3">Quick Links</h6>
+            <ul class="list-unstyled">
+                <li><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                <li><a href="/courses" class="text-white-50 text-decoration-none">Courses</a></li>
+                <li><a href="/contact" class="text-white-50 text-decoration-none">Contact</a></li>
+                <li><a href="/about" class="text-white-50 text-decoration-none">About</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-2 mb-4">
+            <h6 class="fw-bold mb-3">Support</h6>
+            <ul class="list-unstyled">
+                <li><a href="/support" class="text-white-50 text-decoration-none">Help Center</a></li>
+                <li><a href="/tools" class="text-white-50 text-decoration-none">Tools</a></li>
+                <li><a href="/reviews" class="text-white-50 text-decoration-none">Reviews</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <h6 class="fw-bold mb-3">Contact Info</h6>
+            <p class="mb-1"><i class="fas fa-envelope me-2"></i>info@careerredefine.com</p>
+            <p class="mb-1"><i class="fas fa-phone me-2"></i>+91 9535713363</p>
+            <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>22nd Floor, World Trade Center, Unit No 2201A, Rajajinagar, Bengaluru, India</p>
+        </div>
+    </div>
+    <hr class="my-4" style="border-color: rgba(255,255,255,0.3);">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <p class="mb-0">&copy; 2023 Career Redefine. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+            <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+        </div>
+    </div>
+</div>
+</footer>
+
+    <!-- AI Assistant Chat 
+    <div class="chat-assistant">
+        <div class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+            <div class="chat-notification">💬</div>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <div class="assistant-avatar me-2">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Career Redefine AI</h6>
+                        <small class="text-muted">Your Career Transformation Guide</small>
+                    </div>
+                </div>
+                <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant-message">
+                    <div class="message-content">
+                        <strong>👋 Welcome to Career Redefine!</strong><br><br>
+                        I'm here to help you explore our career transformation services. We provide:
+                        <ul class="mt-2 mb-2">
+                            <li>🎓 Industry-relevant courses in Data Science, AI, Web Development, UI/UX</li>
+                            <li>👨‍🏫 Personalized mentorship from industry experts</li>
+                            <li>💼 Job assistance and placement support</li>
+                            <li>📝 Resume building & interview preparation</li>
+                            <li>🛠️ Real-time projects and hands-on training</li>
+                            <li>🤖 AI-powered career tools and mock interviews</li>
+                            <li>📜 Professional certifications upon completion</li>
+                            <li>💰 Affordable pricing with high ROI</li>
+                        </ul>
+                        How can I help you with your career transformation journey today?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask about courses, mentorship, job assistance..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="chat-suggestions">
+                <div class="suggestion-chips">
+                    <span class="suggestion-chip" onclick="sendSuggestion('What courses do you provide?')">🎓 Our Courses</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('Tell me about your mentorship program')">👨‍🏫 Mentorship</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('How does your job placement work?')">💼 Job Placement</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('What AI tools do you offer?')">🤖 AI Tools</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/navbar-scroll.js"></script>
+    <script>
+      // Keep only required sections on Home: Why, Recent Crash Courses, Recent Workshops
+      document.addEventListener('DOMContentLoaded', function() {
+        const keepIds = new Set(['whySection', 'recentCrashSection', 'recentWorkshopSection']);
+        document.querySelectorAll('section').forEach(sec => {
+          if (!keepIds.has(sec.id)) {
+            sec.remove();
+          }
+        });
+      });
+    </script>
+</body>
+</html>

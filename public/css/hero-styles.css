@@ -1,0 +1,565 @@
+/* Enhanced Hero Section Styles */
+
+/* Background Gradient */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #0d47a1 0%, #082567 100%);
+    background-attachment: fixed;
+}
+
+/* Hero Pattern Background */
+.hero-pattern {
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.15) 0%, transparent 50%);
+    z-index: 1;
+}
+
+/* Floating Shapes */
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    top: 60%;
+    left: 80%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    top: 80%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 40px;
+    height: 40px;
+    top: 30%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.shape-5 {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    right: 10%;
+    animation-delay: 3s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(120deg); }
+    66% { transform: translateY(10px) rotate(240deg); }
+}
+
+/* Hero Content Styles */
+.hero-content {
+    z-index: 10;
+    position: relative;
+}
+
+.hero-title {
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-underline {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    z-index: -1;
+}
+
+.hero-underline path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawLine 2s ease-in-out 1s forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Feature Items */
+.icon-box {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .icon-box {
+    transform: scale(1.1);
+    background: rgba(255, 193, 7, 0.2) !important;
+}
+
+/* Buttons */
+.btn-warning {
+    background: linear-gradient(135deg, #42a5f5, #082567);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+    background: linear-gradient(135deg, #082567, #42a5f5);
+}
+
+.btn-outline-light {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Counter Animation */
+.counter {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* Hero Visual Styles */
+.hero-visual {
+    z-index: 10;
+    position: relative;
+}
+
+.hero-image-wrapper {
+    position: relative;
+    z-index: 5;
+}
+
+.hero-image-bg {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: -20px;
+    bottom: -20px;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(120, 119, 198, 0.2));
+    border-radius: 20px;
+    z-index: -1;
+    filter: blur(20px);
+}
+
+.hero-main-image {
+    position: relative;
+    z-index: 10;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.hero-main-image:hover {
+    transform: scale(1.02);
+}
+
+/* Floating Cards */
+.floating-card {
+    position: absolute;
+    z-index: 15;
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+.success-card {
+    top: 10%;
+    right: -10%;
+    width: 280px;
+}
+
+.progress-card {
+    bottom: 30%;
+    left: -15%;
+    width: 250px;
+}
+
+.live-card {
+    top: 50%;
+    right: -5%;
+    width: 200px;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Shadow Effects */
+.shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .floating-card {
+        display: none;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .shape {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2rem !important;
+    }
+    
+    .hero-features .col-md-6 {
+        margin-bottom: 1rem;
+    }
+    
+    .trust-number {
+        font-size: 1.8rem !important;
+    }
+}
+
+/* Animation Classes */
+.animate__animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.animate__fadeInUp {
+    animation-name: fadeInUp;
+}
+
+.animate__fadeInRight {
+    animation-name: fadeInRight;
+}
+
+.animate__fadeInLeft {
+    animation-name: fadeInLeft;
+}
+
+.animate__pulse {
+    animation-name: pulse;
+}
+
+.animate__infinite {
+    animation-iteration-count: infinite;
+}
+
+.animate__delay-1s { animation-delay: 1s; }
+.animate__delay-2s { animation-delay: 2s; }
+.animate__delay-3s { animation-delay: 3s; }
+.animate__delay-4s { animation-delay: 4s; }
+.animate__delay-5s { animation-delay: 5s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+/* Services Page Hero Styles */
+.services-hero {
+    background: linear-gradient(135deg, #0d47a1 0%, #082567 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.services-hero-pattern {
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(120, 119, 198, 0.1) 0%, transparent 50%);
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #42a5f5, #082567);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    margin: 0 auto 1rem;
+    box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);
+}
+
+/* Additional Utility Classes */
+.text-gradient {
+    background: linear-gradient(135deg, #42a5f5, #082567);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bg-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.border-gradient {
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #42a5f5, #082567) 1;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+
+/* === LMS BLUE THEME ENHANCEMENTS === */
+body {
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    color: #0a0a0a;
+    background-color: #e3f2fd;
+}
+.navbar {
+    background: #fff !important;
+    border-bottom: 3px solid #0d47a1;
+}
+.nav-link {
+    color: #0a0a0a !important;
+}
+.nav-link:hover {
+    color: #0d47a1 !important;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #0d47a1, #082567);
+    border: none;
+    color: white;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #082567, #0d47a1);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(13,71,161,0.4);
+}
+.card {
+    border-top: 4px solid #0d47a1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.card-header {
+    background: linear-gradient(135deg, #0d47a1, #082567);
+    color: white !important;
+}
+footer {
+    background: linear-gradient(135deg, #082567, #0d47a1);
+    color: white;
+}
+
+/* === PROFESSIONAL BLUE THEME ENHANCEMENTS === */
+
+/* Body background with subtle pattern */
+body {
+    background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%),
+                repeating-linear-gradient(45deg, rgba(13,71,161,0.02) 0px, rgba(13,71,161,0.02) 2px, transparent 2px, transparent 6px);
+    background-attachment: fixed;
+}
+
+/* Navbar shadow and subtle border */
+.navbar {
+    background: rgba(255,255,255,0.95) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* Buttons with 3D gradient and shine */
+.btn-primary {
+    background: linear-gradient(145deg, #0d47a1, #42a5f5);
+    border: none;
+    color: white;
+    box-shadow: 0 6px 15px rgba(13,71,161,0.3);
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+.btn-primary:hover::before {
+    left: 100%;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(13,71,161,0.4);
+}
+
+/* Card and service/tool box with 3D lift effect */
+.card, .service-card, .tool-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+    border: 1px solid rgba(13,71,161,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover, .service-card:hover, .tool-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(13,71,161,0.15);
+    border-color: rgba(13,71,161,0.3);
+}
+
+/* Card header styling */
+.card-header {
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    color: white !important;
+    font-weight: 600;
+    border-bottom: none;
+}
+
+/* Footer with wave SVG pattern */
+footer {
+    position: relative;
+    background: linear-gradient(135deg, #0d47a1, #082567);
+    color: white;
+    padding-top: 50px;
+}
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23e3f2fd" fill-opacity="1" d="M0,32L60,53.3C120,75,240,117,360,138.7C480,160,600,160,720,165.3C840,171,960,181,1080,165.3C1200,149,1320,107,1380,85.3L1440,64L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>') no-repeat;
+    background-size: cover;
+}
+
+/* Animations for feature items */
+.feature-item {
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(13,71,161,0.15);
+}
+
+/* Hero section overlay with animated gradient */
+.hero-section {
+    position: relative;
+    background: linear-gradient(-45deg, #0d47a1, #42a5f5, #1976d2, #82b1ff);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

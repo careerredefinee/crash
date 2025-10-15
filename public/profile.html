@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Career Redefine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+        <!--    <a class="navbar-brand fw-bold text-primary" href="/">
+                <i class="fas fa-rocket me-2"></i>Career Redefine
+            </a>
+        -->
+            <a class="navbar-brand" href="/">
+    <img src="/images/cr_logo.png" alt="Career Redefine Logo" height="40">
+</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/jobs">Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div id="authSection">
+                        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+                    </div>
+                    <div id="userSection" style="display: none;">
+    <!-- Only one profile link should show. Premium users see Premium Dashboard, regular users see Profile. -->
+    <div class="dropdown d-inline-block" id="userDropdown">
+        <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+    <img src="/images/default-avatar.svg" alt="Profile" class="navbar-profile-img" id="navProfilePic">
+</a>
+        <ul class="dropdown-menu">
+            <li id="profileLink"><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </div>
+
+</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-nav d-lg-none">
+        <a href="/" class="mobile-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="/services" class="mobile-nav-item">
+            <i class="fas fa-cogs"></i>
+            <span>Services</span>
+        </a>
+        <a href="/courses" class="mobile-nav-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Courses</span>
+        </a>
+        <a href="/tools" class="mobile-nav-item">
+            <i class="fas fa-tools"></i>
+            <span>Tools</span>
+        </a>
+        <a href="/jobs" class="mobile-nav-item">
+            <i class="fas fa-briefcase"></i>
+            <span>Jobs</span>
+        </a>
+    </div>
+
+    <!-- Profile Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <!-- Profile Card -->
+                    <div class="card profile-card">
+                        <div class="card-body text-center">
+                            <div class="profile-avatar-container mb-3">
+                                <div class="profile-avatar-wrapper">
+                                    <img id="profileAvatar" src="/images/default-avatar.svg" alt="Profile Picture" class="profile-avatar-img">
+                                    <div class="profile-avatar-overlay" onclick="document.getElementById('profilePicInput').click()">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                </div>
+                                <input type="file" id="profilePicInput" accept="image/*" style="display: none;" onchange="uploadProfilePicture(this)">
+                            </div>
+                            <h5 id="profileName" class="profile-name">Loading...</h5>
+                            <p class="text-muted profile-email" id="profileEmail">Loading...</p>
+                            <button class="btn btn-primary btn-3d" onclick="showEditProfileModal()">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="fas fa-chart-bar me-2"></i>Quick Stats
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <h5 class="text-primary" id="wishlistCount">0</h5>
+                                        <small>Wishlist Items</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <h5 class="text-success" id="skillsCount">0</h5>
+                                        <small>Skills</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <!-- Profile Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">
+                                <i class="fas fa-user me-2"></i>Personal Details
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="wishlist-tab" data-bs-toggle="tab" data-bs-target="#wishlist" type="button" role="tab">
+                                <i class="fas fa-heart me-2"></i>Wishlist
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab">
+                                <i class="fas fa-calendar-check me-2"></i>Appointments
+                            </button>
+                        </li>
+                        
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="queries-tab" data-bs-toggle="tab" data-bs-target="#queries" type="button" role="tab">
+                                <i class="fas fa-question-circle me-2"></i>My Queries
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation" id="premiumTab" style="display: none;">
+                            <button class="nav-link" id="premium-tab" data-bs-toggle="tab" data-bs-target="#premium" type="button" role="tab">
+                                <i class="fas fa-crown me-2 text-warning"></i>Premium Access
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                                <i class="fas fa-lock me-2"></i>Security
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="profileTabsContent">
+                        <!-- Personal Details Tab -->
+                        <div class="tab-pane fade show active" id="details" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Personal Information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3" id="profileDetails">
+                                        <!-- Profile details will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wishlist Tab -->
+                        <div class="tab-pane fade" id="wishlist" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">My Wishlist</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row" id="wishlistContainer">
+                                        <!-- Wishlist items will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appointments Tab -->
+                        <div class="tab-pane fade" id="appointments" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-calendar-check me-2"></i>Appointments
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Meeting Link</th>
+            </tr>
+        </thead>
+        <tbody id="appointmentsTableBody">
+            <!-- Appointments will be loaded here -->
+        </tbody>
+    </table>
+</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certificates Tab -->
+                        <div class="tab-pane fade" id="certificates" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">My Certificates</h6>
+                                    <span class="badge bg-success" id="certificatesCount">0</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row" id="certificatesContainer">
+                                        <!-- Certificates will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- My Queries Tab -->
+                        <div class="tab-pane fade" id="queries" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-question-circle me-2"></i>My Course Queries
+                                    </h6>
+                                    <span class="badge bg-info" id="queriesCount">0</span>
+                                </div>
+                                <div class="card-body">
+                                    <div id="userQueriesContainer">
+                                        <!-- User queries will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premium Access Tab -->
+                        <div class="tab-pane fade" id="premium" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-crown me-2"></i>Premium Access
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="premium-feature-card p-4 border rounded mb-3">
+                                                <h5 class="text-warning mb-3">
+                                                    <i class="fas fa-star me-2"></i>Premium Features
+                                                </h5>
+                                                <ul class="list-unstyled">
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Exclusive Assessments & Quizzes
+                                                    </li>
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Premium Study Materials (PDFs)
+                                                    </li>
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Study Groups & Discussions
+                                                    </li>
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Mock Tests & Practice
+                                                    </li>
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Advanced Certifications
+                                                    </li>
+                                                    <li class="mb-2">
+                                                        <i class="fas fa-check text-success me-2"></i>
+                                                        Progress Tracking & Analytics
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="premium-access-card p-4 border rounded">
+                                                <div id="premiumStatus">
+                                                    <!-- Premium status will be loaded here -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Security Tab -->
+                        <div class="tab-pane fade" id="security" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Change Password</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="changePasswordForm">
+                                        <div class="mb-3">
+                                            <label for="currentPassword" class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" id="currentPassword" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-key me-2"></i>Update Password
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Edit Profile
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="editName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="editName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editEmail" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editPhone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="editPhone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editDob" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="editDob">
+                            </div>
+                            <div class="col-12">
+                                <label for="editSkills" class="form-label">Skills (comma separated)</label>
+                                <textarea class="form-control" id="editSkills" rows="3" placeholder="JavaScript, Python, React, Node.js"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fas fa-rocket me-2"></i>Career Redefine
+                    </h5>
+                    <p class="mb-3">Transforming careers through innovative learning and professional development.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61564699643555" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/career-redefine/" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/career_redefine.ai/" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="/services" class="text-white-50 text-decoration-none">Services</a></li>
+                        <li><a href="/courses" class="text-white-50 text-decoration-none">Courses</a></li>
+                        <li><a href="/jobs" class="text-white-50 text-decoration-none">Jobs</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 mb-4">
+                    <h6 class="fw-bold mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/support" class="text-white-50 text-decoration-none">Help Center</a></li>
+                        <li><a href="/tools" class="text-white-50 text-decoration-none">Tools</a></li>
+                        <li><a href="/reviews" class="text-white-50 text-decoration-none">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h6 class="fw-bold mb-3">Contact Info</h6>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i>info@careerredefine.com</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i>+91 9535713363</p>
+                    <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>22nd Floor, World Trade Center, Unit No 2201A, Rajajinagar, Bengaluru, India</p>
+                    
+                    
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 Career Redefine. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- AI Assistant Chat -->
+    <!-- AI Assistant Chat -->
+    <div class="chat-assistant">
+        <div class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+            <div class="chat-notification">💬</div>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <div class="assistant-avatar me-2">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Career Redefine AI</h6>
+                        <small class="text-muted">Your Career Transformation Guide</small>
+                    </div>
+                </div>
+                <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant-message">
+                    <div class="message-content">
+                        <strong>👋 Welcome to Career Redefine!</strong><br><br>
+                        I'm here to help you explore our career transformation services. We provide:
+                        <ul class="mt-2 mb-2">
+                            <li>🎓 Industry-relevant courses in Data Science, AI, Web Development, UI/UX</li>
+                            <li>👨‍🏫 Personalized mentorship from industry experts</li>
+                            <li>💼 Job assistance and placement support</li>
+                            <li>📝 Resume building & interview preparation</li>
+                            <li>🛠️ Real-time projects and hands-on training</li>
+                            <li>🤖 AI-powered career tools and mock interviews</li>
+                            <li>📜 Professional certifications upon completion</li>
+                            <li>💰 Affordable pricing with high ROI</li>
+                        </ul>
+                        How can I help you with your career transformation journey today?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask about courses, mentorship, job assistance..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="chat-suggestions">
+                <div class="suggestion-chips">
+                    <span class="suggestion-chip" onclick="sendSuggestion('What courses do you provide?')">🎓 Our Courses</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('Tell me about your mentorship program')">👨‍🏫 Mentorship</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('How does your job placement work?')">💼 Job Placement</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('What AI tools do you offer?')">🤖 AI Tools</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+    <!-- AI Assistant Chat -->
+    <div class="chat-assistant">
+        <div class="chat-toggle" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+            <div class="chat-notification">💬</div>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="d-flex align-items-center">
+                    <div class="assistant-avatar me-2">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Career Redefine AI</h6>
+                        <small class="text-muted">Your Career Transformation Guide</small>
+                    </div>
+                </div>
+                <button class="btn-close btn-close-white" onclick="toggleChat()"></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant-message">
+                    <div class="message-content">
+                        <strong>👋 Welcome to Career Redefine!</strong><br><br>
+                        I'm here to help you explore our career transformation services. We provide:
+                        <ul class="mt-2 mb-2">
+                            <li>🎓 Industry-relevant courses in Data Science, AI, Web Development, UI/UX</li>
+                            <li>👨‍🏫 Personalized mentorship from industry experts</li>
+                            <li>💼 Job assistance and placement support</li>
+                            <li>📝 Resume building & interview preparation</li>
+                            <li>🛠️ Real-time projects and hands-on training</li>
+                            <li>🤖 AI-powered career tools and mock interviews</li>
+                            <li>📜 Professional certifications upon completion</li>
+                            <li>💰 Affordable pricing with high ROI</li>
+                        </ul>
+                        How can I help you with your career transformation journey today?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask about courses, mentorship, job assistance..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="chat-suggestions">
+                <div class="suggestion-chips">
+                    <span class="suggestion-chip" onclick="sendSuggestion('What courses do you provide?')">🎓 Our Courses</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('Tell me about your mentorship program')">👨‍🏫 Mentorship</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('How does your job placement work?')">💼 Job Placement</span>
+                    <span class="suggestion-chip" onclick="sendSuggestion('What AI tools do you offer?')">🤖 AI Tools</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

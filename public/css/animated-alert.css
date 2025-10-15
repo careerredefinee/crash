@@ -1,0 +1,101 @@
+/* ATM Card Style Animated Success Alert */
+.animated-success-alert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 700px;
+  max-width: 900px;
+  min-height: 340px;
+  background: linear-gradient(135deg, #e6ffed 60%, #f7c873 100%);
+  border-radius: 36px;
+  border: 4px solid #38d996;
+  box-shadow: 0 16px 64px rgba(56,217,150,0.18), 0 4px 64px rgba(0,0,0,0.10);
+  color: #1e824c;
+  font-size: 2.1rem;
+  font-weight: 700;
+  position: fixed;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  animation: cardPopIn 0.7s cubic-bezier(.4,2,.6,1.2);
+  overflow: visible;
+  backdrop-filter: blur(18px) saturate(1.5);
+  box-sizing: border-box;
+  padding: 48px 32px 54px 32px;
+}
+
+@keyframes cardPopIn {
+  0% { opacity: 0; transform: translate(-50%,-65%) scale(0.7) rotate(-8deg); }
+  60% { opacity: 1; transform: translate(-50%,-50%) scale(1.05) rotate(2deg); }
+  100% { opacity: 1; transform: translate(-50%,-50%) scale(0.93) rotate(0deg); }
+}
+.animated-success-alert .card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  box-shadow: 0 0 32px 8px #38d99644, 0 0 0 6px #38d99622 inset;
+  animation: glowPulse 2s infinite alternate;
+}
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 32px 8px #38d99644, 0 0 0 6px #38d99622 inset; }
+  100% { box-shadow: 0 0 44px 16px #38d99677, 0 0 0 12px #38d99633 inset; }
+}
+.animated-success-alert .checkmark {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  display: block;
+}
+.animated-success-alert .checkmark svg {
+  display: block;
+}
+.animated-success-alert .checkmark .circle {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: drawCircle 0.6s cubic-bezier(.4,2,.6,1.2) forwards;
+}
+.animated-success-alert .checkmark .tick {
+  stroke-dasharray: 38;
+  stroke-dashoffset: 38;
+  animation: drawTick 0.4s 0.5s cubic-bezier(.4,2,.6,1.2) forwards;
+}
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes drawTick {
+  to { stroke-dashoffset: 0; }
+}
+.animated-success-alert .alert-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  color: #1e824c;
+  text-shadow: 0 1px 8px #fff9;
+}
+.animated-success-alert .alert-msg {
+  font-size: 1.08rem;
+  color: #218c5c;
+  text-align: center;
+}
+/* Confetti animation */
+.animated-success-alert .confetti {
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%; pointer-events: none;
+  z-index: 2;
+}
+.animated-success-alert .confetti span {
+  position: absolute;
+  width: 10px; height: 18px;
+  border-radius: 2px;
+  opacity: 0.8;
+  animation: confettiDrop 1.8s linear forwards;
+}
+@keyframes confettiDrop {
+  0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(180px) rotate(60deg); opacity: 0; }
+}
