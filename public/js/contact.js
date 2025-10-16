@@ -16,7 +16,7 @@ async function submitContact(e) {
       phone: document.getElementById('cPhone').value.trim(),
       message: document.getElementById('cMessage').value.trim(),
     };
-    const res = await fetch('/api/request-call', {
+    const res = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

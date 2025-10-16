@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Career Redefine</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="css/premium-admin.css" rel="stylesheet">
-    <!-- Add jQuery before other scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Career Redefine</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/premium-admin.css" rel="stylesheet">
+  <!-- Add jQuery before other scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
-<img src="/images/cr_logo.png" alt="Career Redefine Logo" height="40">
-</a>
+            <img src="/images/cr_logo.png" alt="Career Redefine Logo" height="40">
+        </a>
 
-        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" href="/">Home</a>
                 </li>
-               
                 <li class="nav-item">
                     <a class="nav-link" href="/courses">Courses</a>
                 </li>
-                
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-                
-                
                 <li class="nav-item">
                     <a class="nav-link" href="/about">About</a>
                 </li>
@@ -46,7 +41,7 @@
                     <a class="nav-link" href="/admin">Admin</a>
                 </li>
             </ul>
-            
+
             <div class="d-flex align-items-center">
                 <div id="authSection">
                     <a href="/login" class="btn btn-outline-primary me-2">Login</a>
@@ -56,109 +51,10 @@
                         <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
                             <img id="navProfileAvatar" src="/images/default-avatar.png" alt="Profile" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" onerror="this.src='/images/default-avatar.png';">
                         </a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="/profile">Profile</a></li>
-<li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
-</ul>
-                    </div>
-
-                    <!-- Enrollments Tab -->
-                    <div class="tab-pane fade" id="enrollments">
-                        <div class="pt-3 pb-2 mb-3 border-bottom">
-                            <h2 class="h4 mb-1">Enrollments</h2>
-                            <p class="text-muted mb-0">Crash course enrollments and workshop registrations</p>
-                        </div>
-                        <div class="row g-4">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header bg-light">Crash Course Enrollments</div>
-                                    <div class="card-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Course</th>
-                                                        <th>Name</th>
-                                                        <th>WhatsApp</th>
-                                                        <th>Email</th>
-                                                        <th>Message</th>
-                                                        <th>Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="crashEnrollTbody"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header bg-light">Workshop Registrations</div>
-                                    <div class="card-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Workshop</th>
-                                                        <th>Name</th>
-                                                        <th>WhatsApp</th>
-                                                        <th>Email</th>
-                                                        <th>Message</th>
-                                                        <th>Date</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="workRegTbody"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contact Requests Tab -->
-                    <div class="tab-pane fade" id="callrequests">
-                        <div class="pt-3 pb-2 mb-3 border-bottom">
-                            <h2 class="h4 mb-1">Contact Requests</h2>
-                            <p class="text-muted mb-0">Submissions from the Contact page</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Message</th>
-                                                <th>Date</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="callRequestsTableBody"></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Workshops Tab -->
-                    <div class="tab-pane fade" id="workshops">
-                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                            <div>
-                                <h1 class="h2 mb-1">Workshops Management</h1>
-                                <p class="text-muted mb-0">Add upcoming workshops. Date & time defaults to "Coming soon" until set.</p>
-                            </div>
-                            <button class="btn btn-primary" onclick="showAddWorkshopModal()">
-                                <i class="fas fa-plus me-2"></i>Add Workshop
-                            </button>
-                        </div>
-                        <div class="row" id="workshopsGrid">
-                            <!-- Workshops will be loaded here -->
-                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -275,7 +171,6 @@
                         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                             <h1 class="h2">Users Management</h1>
                         </div>
-                        
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -287,9 +182,7 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="usersTableBody">
-                                    <!-- Users will be loaded here -->
-                                </tbody>
+                                <tbody id="usersTableBody"></tbody>
                             </table>
                         </div>
                     </div>
@@ -310,16 +203,103 @@
                         </div>
                     </div>
 
-                    
+                    <!-- Workshops Tab -->
+                    <div class="tab-pane fade" id="workshops">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <div>
+                                <h1 class="h2 mb-1">Workshops Management</h1>
+                                <p class="text-muted mb-0">Add upcoming workshops. Date & time defaults to "Coming soon" until set.</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="showAddWorkshopModal()">
+                                <i class="fas fa-plus me-2"></i>Add Workshop
+                            </button>
+                        </div>
+                        <div class="row" id="workshopsGrid"></div>
+                    </div>
 
-                   
+                    <!-- Enrollments Tab -->
+                    <div class="tab-pane fade" id="enrollments">
+                        <div class="pt-3 pb-2 mb-3 border-bottom">
+                            <h2 class="h4 mb-1">Enrollments</h2>
+                            <p class="text-muted mb-0">Crash course enrollments and workshop registrations</p>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-light">Crash Course Enrollments</div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course</th>
+                                                        <th>Name</th>
+                                                        <th>WhatsApp</th>
+                                                        <th>Email</th>
+                                                        <th>Message</th>
+                                                        <th>Date</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="crashEnrollTbody"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-light">Workshop Registrations</div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Workshop</th>
+                                                        <th>Name</th>
+                                                        <th>WhatsApp</th>
+                                                        <th>Email</th>
+                                                        <th>Message</th>
+                                                        <th>Date</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="workRegTbody"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-
-                    
-                   
-
-                    <!-- Add Course Modal -->
-                    <div class="modal fade" id="addCourseModal" tabindex="-1">
+                    <!-- Contact Requests Tab -->
+                    <div class="tab-pane fade" id="callrequests">
+                        <div class="pt-3 pb-2 mb-3 border-bottom">
+                            <h2 class="h4 mb-1">Contact Requests</h2>
+                            <p class="text-muted mb-0">Submissions from the Contact page</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="callRequestsTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ <div class="modal fade" id="addCourseModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content shadow-lg rounded-4 border-0">
             <form id="addCourseForm">
@@ -369,88 +349,6 @@
     </div>
 </div>
 
-    <!-- Add Job Modal -->
-    <div class="modal fade" id="addJobModal" tabindex="-1" role="dialog" aria-labelledby="addJobModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addJobModalLabel">Add New Job</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addJobForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="jobTitle" class="form-label">Job Title</label>
-                                <input type="text" class="form-control" id="jobTitle" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="jobCompany" class="form-label">Company</label>
-                                <input type="text" class="form-control" id="jobCompany" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="jobLocation" class="form-label">Location</label>
-                                <input type="text" class="form-control" id="jobLocation" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="jobSalary" class="form-label">Salary</label>
-                                <input type="text" class="form-control" id="jobSalary" placeholder="e.g., $50,000 - $70,000" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="jobDescription" class="form-label">Job Description</label>
-                                <textarea class="form-control" id="jobDescription" rows="3" required></textarea>
-                            </div>
-                            <div class="col-12">
-                                <label for="jobRequirements" class="form-label">Requirements</label>
-                                <textarea class="form-control" id="jobRequirements" rows="3" required></textarea>
-                            </div>
-                            <div class="col-12">
-                                <label for="jobLink" class="form-label">Application/Meeting Link</label>
-                                <input type="url" class="form-control" id="jobLink" placeholder="https://..." required>
-                                <small class="form-text text-muted">This link will be used when users click 'Apply Job'</small>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Add Job</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Blog Modal -->
-    <div class="modal fade" id="addBlogModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add New Blog</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addBlogForm">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label for="blogTitle" class="form-label">Blog Title</label>
-                                <input type="text" class="form-control" id="blogTitle" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="blogContent" class="form-label">Content</label>
-                                <textarea class="form-control" id="blogContent" rows="6" required></textarea>
-                            </div>
-                            <div class="col-12">
-                                <label for="blogImage" class="form-label">Blog Image (Optional)</label>
-                                <input type="file" class="form-control" id="blogImage" accept="image/*">
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Add Blog</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Load common.js first, then admin.js -->

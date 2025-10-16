@@ -14,6 +14,23 @@ function showAlert(message, type = 'info') {
         document.body.appendChild(alertContainer);
     }
 
+    // Create alert element
+    const alertEl = document.createElement('div');
+    alertEl.className = `alert alert-${type} alert-dismissible fade show`;
+    alertEl.role = 'alert';
+    alertEl.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    // Add to container and auto-remove after 5 seconds
+    alertContainer.appendChild(alertEl);
+    setTimeout(() => {
+        alertEl.classList.remove('show');
+        setTimeout(() => alertEl.remove(), 150);
+    }, 5000);
+}
+
 // Load workshops
 async function loadWorkshops() {
     try {
@@ -207,23 +224,6 @@ async function deleteWorkshopRegistration(id) {
 function showAddWorkshopModal() {
     const modal = new bootstrap.Modal(document.getElementById('addWorkshopModal'));
     modal.show();
-}
-    
-    // Create alert element
-    const alertEl = document.createElement('div');
-    alertEl.className = `alert alert-${type} alert-dismissible fade show`;
-    alertEl.role = 'alert';
-    alertEl.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-    
-    // Add to container and auto-remove after 5 seconds
-    alertContainer.appendChild(alertEl);
-    setTimeout(() => {
-        alertEl.classList.remove('show');
-        setTimeout(() => alertEl.remove(), 150);
-    }, 5000);
 }
 
 // Check if user is authenticated and admin
@@ -1012,7 +1012,7 @@ function loadPremiumPayments(payments) {
 
 async function loadCallRequests() {
     try {
-        const res = await fetch('/api/admin/call-requests');
+        const res = await fetch('/api/admin/contacts');
         const requests = await res.json();
 
         const tbody = document.getElementById('callRequestsTableBody');
@@ -1041,26 +1041,19 @@ async function loadCallRequests() {
         console.error('Error loading call requests:', err);
     }
 }
-async function deleteCallRequest(id) {
-    if (confirm("Are you sure you want to delete this call request?")) {
-        try {
-            const res = await fetch(`/api/admin/call-requests/${id}`, {
-                method: 'DELETE'
-            });
-            const data = await res.json();
 
-            if (data.success) {
-                alert("Call request deleted successfully!");
-                loadCallRequests();
-            } else {
-                alert("Failed to delete call request");
-            }
-        } catch (err) {
-            console.error("Error deleting call request:", err);
-        }
+async function deleteCallRequest(id) {
+    if (!confirm('Are you sure you want to delete this contact?')) return;
+    const resp = await fetch(`/api/admin/contacts/${id}`, { method: 'DELETE' });
+    const data = await resp.json();
+
+    if (data.success) {
+        alert("Contact deleted successfully!");
+        loadCallRequests();
+    } else {
+        alert("Failed to delete contact");
     }
 }
-
 
 // Load premium assessments
 async function loadPremiumAssessments() {
@@ -3068,31 +3061,4 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Initialize admin dashboard when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing admin dashboard...');
-    
-    // Load all dashboard data
-    try {
-        loadUsers();
-        loadCourses();
-        loadBlogs();
-        loadJobs();
-        loadAppointments();
-        loadReviews();
-        loadPayments();
-        loadComments();
-        loadCourseQueries();
-        
-        // Load premium data
-        loadPremiumUsers();
-        loadPremiumStats();
-        loadPremiumAssessments();
-        loadPremiumMaterials();
-        loadPremiumGroups();
-        
-        console.log('Admin dashboard initialized successfully');
-    } catch (error) {
-        console.error('Error initializing admin dashboard:', error);
-    }
-});
+// Duplicate DOMContentLoaded initializer removed to avoid calling unsupported loaders

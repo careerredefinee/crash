@@ -20,6 +20,7 @@ const CrashCourse = require('./models/CrashCourse');
 const CrashCourseEnrollment = require('./models/CrashCourseEnrollment');
 const Workshop = require('./models/Workshop');
 const WorkshopRegistration = require('./models/WorkshopRegistration');
+const CrashContact = require('./models/CrashContact');
 const resumesRouter = require('./routes/resumes');
 
 const app = express();
@@ -28,6 +29,12 @@ const PORT = process.env.PORT || 3000;
 // JWT Configuration
 const JWT_SECRET = process.env.JWT_SECRET || 'career-redefine-secret-key';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '30d';
+
+// Core middleware MUST be applied before routes
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ limit: '20mb', extended: true }));
+app.use(express.static('public'));
+app.use(cookieParser());
 
 // MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://careerredefinee_db_user:AaBb12%4012@careerredefine.qqk8sno.mongodb.net/?retryWrites=true&w=majority&appName=careerredefine';
@@ -108,11 +115,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-// Middleware
-app.use(express.json({ limit: '20mb' }));
-app.use(express.urlencoded({ limit: '20mb', extended: true }));
-app.use(express.static('public'));
-app.use(cookieParser());
+// (moved middleware above)
 
 // Log all incoming requests
 app.use((req, res, next) => {
@@ -721,12 +724,16 @@ const EMAIL_PASS = process.env.EMAIL_PASS || 'xzcucouyjgfrpatn';
 const EMAIL_FROM = process.env.EMAIL_FROM || EMAIL_USER;
 
 try {
+  // Prefer explicit SMTP to avoid provider-specific auth edge cases
+  const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const SMTP_PORT = parseInt(process.env.SMTP_PORT || '465', 10);
+  const SMTP_SECURE = process.env.SMTP_SECURE ? process.env.SMTP_SECURE === 'true' : SMTP_PORT === 465;
+
   transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: EMAIL_USER,
-      pass: EMAIL_PASS
-    }
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_SECURE,
+    auth: { user: EMAIL_USER, pass: EMAIL_PASS }
   });
 
   // Verify connection configuration
@@ -803,9 +810,9 @@ app.get('/support', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'support.html'));
 });
 
-// Contact route (alias to support)
+// Contact route
 app.get('/contact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'support.html'));
+  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
 app.get('/jobs', (req, res) => {
@@ -1017,6 +1024,42 @@ app.post('/api/request-call', async (req, res) => {
     res.status(500).json({ error: 'Failed to send call request' });
   }
 });
+
+// New Contact endpoint -> stores to CrashContact and emails admin + user
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, phone, message } = req.body;
+    if (!name || !email || !phone || !message) {
+      return res.status(400).json({ success: false, error: 'All fields are required' });
+    }
+
+    const entry = new CrashContact({ name, email, phone, message });
+    await entry.save();
+
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
+    try {
+      await transporter.sendMail({
+        from: EMAIL_FROM,
+        to: adminEmail,
+        subject: 'New Contact Submission',
+        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
+      });
+      await transporter.sendMail({
+        from: EMAIL_FROM,
+        to: email,
+        subject: 'We Received Your Message',
+        text: `Hello ${name},\n\nThank you for contacting Career Redefine! We have received your message and will get back to you shortly.\n\nDetails:\nPhone: ${phone}\nMessage: ${message}\n\nBest Regards,\nCareer Redefine`
+      });
+    } catch (mailErr) {
+      console.warn('Contact email failed:', mailErr?.message || mailErr);
+    }
+
+    res.json({ success: true, message: 'Contact submitted successfully', contact: entry });
+  } catch (err) {
+    console.error('Contact submit error:', err);
+    res.status(500).json({ success: false, error: 'Failed to submit contact' });
+  }
+});
     
 // User Profile: get current user
 app.get('/api/me', async (req, res) => {
@@ -1160,6 +1203,34 @@ app.delete('/api/admin/call-requests/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting call request:', error);
     res.status(500).json({ error: 'Failed to delete call request' });
+  }
+});
+
+// Admin: list CrashContact entries
+app.get('/api/admin/contacts', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    const entries = await CrashContact.find().sort({ createdAt: -1 });
+    res.json(entries);
+  } catch (error) {
+    console.error('Error fetching contacts:', error);
+    res.status(500).json({ error: 'Failed to fetch contacts' });
+  }
+});
+
+// Admin: delete CrashContact entry
+app.delete('/api/admin/contacts/:id', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    await CrashContact.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Contact deleted' });
+  } catch (error) {
+    console.error('Error deleting contact:', error);
+    res.status(500).json({ error: 'Failed to delete contact' });
   }
 });
 
