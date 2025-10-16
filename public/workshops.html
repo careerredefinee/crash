@@ -9,21 +9,56 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">Career Redefine</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/workshops">Workshops</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+ <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+    <img src="/images/cr_logo.png" alt="Career Redefine Logo" height="40">
+</a>
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/workshops">Workshops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div id="authSection">
+                        <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+                    </div>
+                    <div id="userSection" style="display: none;">
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+                                <img id="navProfileAvatar" src="/images/default-avatar.png" alt="Profile" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" onerror="this.src='/images/default-avatar.png';">
+                            </a>
+<ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+    <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+</ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
   <main style="padding-top: 80px;">
     <section class="py-5 bg-light">
