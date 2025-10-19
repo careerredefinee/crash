@@ -3,12 +3,14 @@
 // Check authentication status
 async function checkAuth() {
     try {
-        const response = await fetch('/api/check-auth');
-        const data = await response.json();
-        
         const authSection = document.getElementById('authSection');
         const userSection = document.getElementById('userSection');
-        
+        if (authSection) authSection.style.display = 'none';
+        if (userSection) userSection.style.display = 'none';
+
+        const response = await fetch('/api/check-auth', { credentials: 'include' });
+        const data = await response.json();
+
         if (data.authenticated) {
             if (authSection) authSection.style.display = 'none';
             if (userSection) userSection.style.display = 'block';

@@ -12,6 +12,26 @@ function showPremiumToolsNav() {
         } else if (premiumDropdown) {
             premiumDropdown.style.display = 'none';
         }
+
+// Hide tabs not needed: Wishlist, Appointments, Queries, Certificates, Premium
+function hideUnusedTabs() {
+    const toHide = [
+        '#wishlist-tab', '#appointments-tab', '#queries-tab', '#certificates-tab', '#premiumTab'
+    ];
+    toHide.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) {
+            const li = el.closest('li');
+            if (li) li.style.display = 'none';
+            el.style.display = 'none';
+        }
+    });
+    const panes = ['#wishlist', '#appointments', '#queries', '#certificates', '#premium'];
+    panes.forEach(sel => {
+        const pane = document.querySelector(sel);
+        if (pane) pane.style.display = 'none';
+    });
+}
     });
 }
 
@@ -30,13 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         currentUser = user;
+        // Only load profile; hide other sections per requirements
         loadProfile();
-        loadWishlist();
-        // loadEnrolledCourses(); // Removed My Courses tab
-        loadCertificates();
-        loadUserQueries();
-        loadUserAppointments();
-        checkPremiumAccess();
+        hideUnusedTabs();
     });
     
     // Initialize forms
@@ -338,10 +354,8 @@ function enrollCourse(courseId) {
 function showEditProfileModal() {
     // Populate form with current data
     document.getElementById('editName').value = currentUser.name || '';
-    document.getElementById('editEmail').value = currentUser.email || '';
     document.getElementById('editPhone').value = currentUser.phone || '';
     document.getElementById('editDob').value = currentUser.dob ? currentUser.dob.split('T')[0] : '';
-    document.getElementById('editSkills').value = currentUser.skills ? currentUser.skills.join(', ') : '';
     
     const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
     modal.show();
@@ -352,21 +366,13 @@ async function handleProfileUpdate(e) {
     e.preventDefault();
     
     const name = document.getElementById('editName').value;
-    const email = document.getElementById('editEmail').value;
     const phone = document.getElementById('editPhone').value;
     const dob = document.getElementById('editDob').value;
-    const skillsText = document.getElementById('editSkills').value;
-    const skills = skillsText ? skillsText.split(',').map(skill => skill.trim()).filter(skill => skill) : [];
     const submitBtn = e.target.querySelector('button[type="submit"]');
     
     // Validation
-    if (!name.trim() || !email.trim()) {
-        showAlert('Name and email are required', 'warning');
-        return;
-    }
-    
-    if (!isValidEmail(email)) {
-        showAlert('Please enter a valid email address', 'warning');
+    if (!name.trim()) {
+        showAlert('Name is required', 'warning');
         return;
     }
     
@@ -383,7 +389,7 @@ async function handleProfileUpdate(e) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, phone, dob, skills })
+            body: JSON.stringify({ name, phone, dob })
         });
         
         const data = await response.json();

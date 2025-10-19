@@ -159,6 +159,140 @@ app.use(session({
   cookie: { secure: false }
 }));
 
+// Basic auth helper
+function requireUser(req, res) {
+  if (!req.session.user) {
+    res.status(401).json({ success: false, error: 'Authentication required' });
+    return null;
+  }
+  return req.session.user;
+}
+
+// Auth status for navbar
+app.get('/api/check-auth', async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.json({ authenticated: false });
+    }
+    const user = await User.findById(req.session.user._id).lean();
+    if (!user) {
+      return res.json({ authenticated: false });
+    }
+    return res.json({
+      authenticated: true,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || '',
+        profilePic: user.profilePic || '/images/default-avatar.png',
+        isAdmin: !!user.isAdmin,
+      }
+    });
+  } catch (err) {
+    console.error('check-auth error', err);
+    return res.json({ authenticated: false });
+  }
+});
+
+// Logout
+app.post('/api/logout', (req, res) => {
+  try {
+    req.session.destroy(() => {
+      res.json({ success: true });
+    });
+  } catch (e) {
+    res.json({ success: true });
+  }
+});
+
+// Profile: get current user
+app.get('/api/profile', async (req, res) => {
+  try {
+    const sessUser = requireUser(req, res);
+    if (!sessUser) return;
+    const user = await User.findById(sessUser._id).lean();
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone || '',
+      dob: user.dob || null,
+      skills: user.skills || [],
+      profilePic: user.profilePic || '/images/default-avatar.png',
+      wishlist: user.wishlist || [],
+      isAdmin: !!user.isAdmin,
+      createdAt: user.createdAt
+    });
+  } catch (err) {
+    console.error('profile fetch error', err);
+    res.status(500).json({ success: false, error: 'Failed to fetch profile' });
+  }
+});
+
+// Profile: update limited fields (name, phone, dob)
+app.put('/api/profile', async (req, res) => {
+  try {
+    const sessUser = requireUser(req, res);
+    if (!sessUser) return;
+    const { name, phone, dob } = req.body;
+    const update = {};
+    if (typeof name !== 'undefined') update.name = String(name).trim();
+    if (typeof phone !== 'undefined') update.phone = String(phone).trim();
+    if (typeof dob !== 'undefined') update.dob = dob ? new Date(dob) : null;
+    const user = await User.findByIdAndUpdate(sessUser._id, update, { new: true }).lean();
+    res.json({ success: true, user: { _id: user._id, name: user.name, email: user.email, phone: user.phone, dob: user.dob, profilePic: user.profilePic } });
+  } catch (err) {
+    console.error('profile update error', err);
+    res.status(500).json({ success: false, error: 'Failed to update profile' });
+  }
+});
+
+// Profile: upload/change profile picture
+const uploadProfilePic = multer({ storage: storage });
+app.post('/api/profile/picture', uploadProfilePic.single('profilePic'), async (req, res) => {
+  try {
+    const sessUser = requireUser(req, res);
+    if (!sessUser) return;
+    let imageUrl = '';
+    if (req.file && req.file.path) {
+      imageUrl = req.file.path;
+    } else if (req.file && req.file.buffer) {
+      const fileBase64 = req.file.buffer.toString('base64');
+      const fileDataUri = `data:${req.file.mimetype};base64,${fileBase64}`;
+      const cloudinaryRes = await cloudinary.uploader.upload(fileDataUri, { folder: 'career-redefine/profile-pics' });
+      imageUrl = cloudinaryRes.secure_url;
+    } else {
+      return res.status(400).json({ success: false, error: 'No image uploaded' });
+    }
+    const user = await User.findByIdAndUpdate(sessUser._id, { profilePic: imageUrl }, { new: true }).lean();
+    res.json({ success: true, profilePic: user.profilePic });
+  } catch (err) {
+    console.error('profile picture upload error', err);
+    res.status(500).json({ success: false, error: 'Failed to upload profile picture' });
+  }
+});
+
+// Change password (simple plaintext check consistent with current storage)
+app.put('/api/change-password', async (req, res) => {
+  try {
+    const sessUser = requireUser(req, res);
+    if (!sessUser) return;
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) return res.status(400).json({ success: false, error: 'Missing fields' });
+    const user = await User.findById(sessUser._id);
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+    if (user.password !== currentPassword) return res.status(400).json({ success: false, error: 'Invalid current password' });
+    user.password = newPassword;
+    await user.save();
+    res.json({ success: true });
+  } catch (err) {
+    console.error('change-password error', err);
+    res.status(500).json({ success: false, error: 'Failed to change password' });
+  }
+});
+
 // Job posting routes
 app.post('/api/jobs', async (req, res) => {
   try {
@@ -3292,6 +3426,86 @@ app.delete('/api/admin/workshops/:id', async (req, res) => {
   } catch (err) {
     console.error('Workshop delete error:', err);
     res.status(500).json({ success: false, error: 'Failed to delete workshop' });
+  }
+});
+
+// Admin: Email Reminders CRUD
+app.get('/api/admin/reminders', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ success: false, error: 'Admin access required' });
+    }
+    const reminders = await EmailReminder.find().populate('workshopId', 'title');
+    res.json({ success: true, reminders });
+  } catch (err) {
+    console.error('Reminders fetch error:', err);
+    res.status(500).json({ success: false, error: 'Failed to fetch reminders' });
+  }
+});
+
+app.post('/api/admin/reminders', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ success: false, error: 'Admin access required' });
+    }
+    const { userEmail, workshopId, meetingLink } = req.body;
+    if (!userEmail || !workshopId) {
+      return res.status(400).json({ success: false, error: 'userEmail and workshopId are required' });
+    }
+    const ws = await Workshop.findById(workshopId);
+    if (!ws) return res.status(404).json({ success: false, error: 'Workshop not found' });
+
+    const reminder = new EmailReminder({
+      userEmail: String(userEmail).trim().toLowerCase(),
+      workshopId: ws._id,
+      workshopTitle: ws.title,
+      workshopDateTime: ws.dateTime,
+      meetingLink: meetingLink || ''
+    });
+    await reminder.save();
+    res.json({ success: true, reminder });
+  } catch (err) {
+    console.error('Reminder create error:', err);
+    res.status(500).json({ success: false, error: 'Failed to create reminder' });
+  }
+});
+
+app.put('/api/admin/reminders/:id', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ success: false, error: 'Admin access required' });
+    }
+    const { id } = req.params;
+    const { userEmail, workshopId, meetingLink } = req.body;
+    const update = {};
+    if (typeof userEmail !== 'undefined') update.userEmail = String(userEmail).trim().toLowerCase();
+    if (typeof meetingLink !== 'undefined') update.meetingLink = String(meetingLink).trim();
+    if (typeof workshopId !== 'undefined') {
+      const ws = await Workshop.findById(workshopId);
+      if (!ws) return res.status(404).json({ success: false, error: 'Workshop not found' });
+      update.workshopId = ws._id;
+      update.workshopTitle = ws.title;
+      update.workshopDateTime = ws.dateTime;
+    }
+    const reminder = await EmailReminder.findByIdAndUpdate(id, update, { new: true });
+    if (!reminder) return res.status(404).json({ success: false, error: 'Reminder not found' });
+    res.json({ success: true, reminder });
+  } catch (err) {
+    console.error('Reminder update error:', err);
+    res.status(500).json({ success: false, error: 'Failed to update reminder' });
+  }
+});
+
+app.delete('/api/admin/reminders/:id', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ success: false, error: 'Admin access required' });
+    }
+    await EmailReminder.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reminder delete error:', err);
+    res.status(500).json({ success: false, error: 'Failed to delete reminder' });
   }
 });
 

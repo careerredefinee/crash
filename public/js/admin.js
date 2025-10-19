@@ -13,7 +13,6 @@ function showAlert(message, type = 'info') {
         alertContainer.style.zIndex = '9999';
         document.body.appendChild(alertContainer);
     }
-
     // Create alert element
     const alertEl = document.createElement('div');
     alertEl.className = `alert alert-${type} alert-dismissible fade show`;
@@ -256,13 +255,25 @@ async function startEditWorkshop(id) {
         }
         const ws = data.workshop;
         editingWorkshopId = ws._id;
-        document.getElementById('ewTitle').value = ws.title || '';
-        document.getElementById('ewDesc').value = ws.description || '';
-        document.getElementById('ewPrice').value = typeof ws.price === 'number' ? ws.price : '';
-        document.getElementById('ewStrike').value = typeof ws.strikePrice === 'number' ? ws.strikePrice : '';
-        document.getElementById('ewDateTime').value = ws.dateTime ? toDatetimeLocalValue(ws.dateTime) : '';
+        const modalEl = document.getElementById('editWorkshopModal');
+        const titleEl = document.getElementById('ewTitle');
+        const descEl = document.getElementById('ewDesc');
+        const priceEl = document.getElementById('ewPrice');
+        const strikeEl = document.getElementById('ewStrike');
+        const dtEl = document.getElementById('ewDateTime');
 
-        const modal = new bootstrap.Modal(document.getElementById('editWorkshopModal'));
+        if (!modalEl || !titleEl || !descEl || !priceEl || !strikeEl || !dtEl) {
+            showAlert('Edit modal not ready. Please refresh the page and try again.', 'danger');
+            return;
+        }
+
+        titleEl.value = ws.title || '';
+        descEl.value = ws.description || '';
+        priceEl.value = typeof ws.price === 'number' ? ws.price : '';
+        strikeEl.value = typeof ws.strikePrice === 'number' ? ws.strikePrice : '';
+        dtEl.value = ws.dateTime ? toDatetimeLocalValue(ws.dateTime) : '';
+
+        const modal = new bootstrap.Modal(modalEl);
         modal.show();
     } catch (err) {
         console.error('startEditWorkshop error', err);
@@ -459,6 +470,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         showAlert('Failed to initialize admin dashboard. Please try again.', 'danger');
     }
 });
+
+// Expose functions globally for inline onclick usage in admin.html
+window.showAddWorkshopModal = showAddWorkshopModal;
+window.handleAddWorkshop = handleAddWorkshop;
+window.startEditWorkshop = startEditWorkshop;
+window.handleEditWorkshop = handleEditWorkshop;
+window.deleteWorkshop = deleteWorkshop;
+window.showAddReminderModal = showAddReminderModal;
+window.submitReminder = submitReminder;
+window.editReminderLink = editReminderLink;
+window.deleteReminder = deleteReminder;
 
 // Load dashboard statistics (only required widgets)
 async function loadDashboardStats() {
@@ -3204,8 +3226,10 @@ async function loadReminders() {
                 <td>${r.meetingLink ? `<a href="${r.meetingLink}" target="_blank">Link</a>` : '-'}</td>
                 <td>${statusBadges.join(' ') || '<span class="badge bg-secondary">None</span>'}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" onclick="editReminder('${r._id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteReminder('${r._id}')">Delete</button>
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-outline-primary" onclick="editReminderLink('${r._id}', '${(r.meetingLink || '').replace(/'/g, "\\'")}')">Edit Link</button>
+                      <button class="btn btn-outline-danger" onclick="deleteReminder('${r._id}')">Delete</button>
+                    </div>
                 </td>
             `;
             tbody.appendChild(row);
