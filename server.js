@@ -21,6 +21,8 @@ const CrashCourseEnrollment = require('./models/CrashCourseEnrollment');
 const Workshop = require('./models/Workshop');
 const WorkshopRegistration = require('./models/WorkshopRegistration');
 const CrashContact = require('./models/CrashContact');
+const CallRequest = require('./models/CallRequest');
+const EmailReminder = require('./models/EmailReminder');
 const resumesRouter = require('./routes/resumes');
 
 const app = express();
@@ -81,6 +83,29 @@ app.post('/api/workshops/:id/register', async (req, res) => {
     } catch (mailErr) {
       console.warn('Workshop registration email failed:', mailErr?.message || mailErr);
     }
+
+    // Auto-create email reminder if workshop has a date/time set
+    if (ws.dateTime) {
+      try {
+        // Check if reminder already exists
+        const existingReminder = await EmailReminder.findOne({ userEmail: email, workshopId: id });
+        if (!existingReminder) {
+          const reminder = new EmailReminder({
+            userEmail: email,
+            workshopId: id,
+            workshopTitle: ws.title,
+            workshopDateTime: ws.dateTime,
+            meetingLink: '' // Admin can add this later
+          });
+
+          await reminder.save();
+          console.log(`Auto-created email reminder for ${email} - workshop: ${ws.title}`);
+        }
+      } catch (reminderErr) {
+        console.warn('Failed to create auto reminder:', reminderErr?.message || reminderErr);
+      }
+    }
+
     res.json({ success: true, registration: reg });
   } catch (err) {
     console.error('Workshop registration error:', err);
@@ -435,18 +460,6 @@ app.post('/api/resumes', uploadMemory.single('resume'), async (req, res) => {
       });
   }
 });
-
-
-const callRequestSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  phone: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
-});
-
-const CallRequest = mongoose.models.CallRequest || mongoose.model('CallRequest', callRequestSchema);
-
 
 // Course Schema
 const courseSchema = new mongoose.Schema({
@@ -1060,6 +1073,44 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to submit contact' });
   }
 });
+
+// Call Request endpoint
+app.post('/api/call-request', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ success: false, error: 'Name and email are required' });
+    }
+
+    const callRequest = new CallRequest({ name, email, message: message || '' });
+    await callRequest.save();
+
+    // Send email notifications
+    const adminEmail = process.env.ADMIN_EMAIL || 'shannuazshannu@gmail.com';
+    try {
+      await transporter.sendMail({
+        from: EMAIL_FROM,
+        to: adminEmail,
+        subject: '📞 New Call Request from Career Redefine',
+        text: `New call request received:\n\nName: ${name}\nEmail: ${email}\nMessage: ${message || 'No message provided'}\n\nPlease contact them as soon as possible.`
+      });
+
+      await transporter.sendMail({
+        from: EMAIL_FROM,
+        to: email,
+        subject: 'Call Request Received - Career Redefine',
+        text: `Hello ${name},\n\nThank you for requesting a callback from Career Redefine! We have received your request and will contact you shortly.\n\nDetails:\nEmail: ${email}\nMessage: ${message || 'No message provided'}\n\nBest Regards,\nCareer Redefine Team`
+      });
+    } catch (mailErr) {
+      console.warn('Call request email failed:', mailErr?.message || mailErr);
+    }
+
+    res.json({ success: true, message: 'Call request submitted successfully', callRequest });
+  } catch (err) {
+    console.error('Call request error:', err);
+    res.status(500).json({ success: false, error: 'Failed to submit call request' });
+  }
+});
     
 // User Profile: get current user
 app.get('/api/me', async (req, res) => {
@@ -1203,6 +1254,106 @@ app.delete('/api/admin/call-requests/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting call request:', error);
     res.status(500).json({ error: 'Failed to delete call request' });
+  }
+});
+
+// Admin: Get all email reminders
+app.get('/api/admin/reminders', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    const reminders = await EmailReminder.find().sort({ createdAt: -1 });
+    res.json(reminders);
+  } catch (error) {
+    console.error('Error fetching reminders:', error);
+    res.status(500).json({ error: 'Failed to fetch reminders' });
+  }
+});
+
+// Admin: Create email reminder
+app.post('/api/admin/reminders', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    const { userEmail, workshopId, meetingLink } = req.body;
+    if (!userEmail || !workshopId) {
+      return res.status(400).json({ error: 'User email and workshop ID are required' });
+    }
+
+    // Get workshop details
+    const workshop = await Workshop.findById(workshopId);
+    if (!workshop) {
+      return res.status(404).json({ error: 'Workshop not found' });
+    }
+
+    if (!workshop.dateTime) {
+      return res.status(400).json({ error: 'Workshop must have a date and time set' });
+    }
+
+    // Check if reminder already exists for this user and workshop
+    const existingReminder = await EmailReminder.findOne({ userEmail, workshopId });
+    if (existingReminder) {
+      return res.status(400).json({ error: 'Reminder already exists for this user and workshop' });
+    }
+
+    const reminder = new EmailReminder({
+      userEmail,
+      workshopId,
+      workshopTitle: workshop.title,
+      workshopDateTime: workshop.dateTime,
+      meetingLink: meetingLink || ''
+    });
+
+    await reminder.save();
+
+    // Send enrollment confirmation email immediately
+    try {
+      await transporter.sendMail({
+        from: EMAIL_FROM,
+        to: userEmail,
+        subject: `🎉 Workshop Enrollment Confirmed - ${workshop.title}`,
+        html: `
+          <h2>Workshop Enrollment Confirmed!</h2>
+          <p>Hello,</p>
+          <p>You have been successfully enrolled for the workshop: <strong>${workshop.title}</strong></p>
+          <p><strong>Date & Time:</strong> ${new Date(workshop.dateTime).toLocaleString()}</p>
+          ${meetingLink ? `<p><strong>Meeting Link:</strong> <a href="${meetingLink}">${meetingLink}</a></p>` : ''}
+          <p>We will send you reminders closer to the workshop date.</p>
+          <p>Best Regards,<br>Career Redefine Team</p>
+        `
+      });
+
+      // Mark enrollment email as sent
+      reminder.enrollmentEmailSent = true;
+      reminder.enrollmentEmailSentAt = new Date();
+      await reminder.save();
+    } catch (mailErr) {
+      console.warn('Enrollment email failed:', mailErr?.message || mailErr);
+    }
+
+    res.json({ success: true, reminder });
+  } catch (error) {
+    console.error('Error creating reminder:', error);
+    res.status(500).json({ error: 'Failed to create reminder' });
+  }
+});
+
+// Admin: Delete email reminder
+app.delete('/api/admin/reminders/:id', async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    
+    await EmailReminder.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: 'Reminder deleted' });
+  } catch (error) {
+    console.error('Error deleting reminder:', error);
+    res.status(500).json({ error: 'Failed to delete reminder' });
   }
 });
 
@@ -3072,6 +3223,17 @@ app.get('/api/workshops', async (req, res) => {
   }
 });
 
+app.get('/api/workshops/:id', async (req, res) => {
+  try {
+    const ws = await Workshop.findById(req.params.id);
+    if (!ws) return res.status(404).json({ success: false, error: 'Workshop not found' });
+    res.json({ success: true, workshop: ws });
+  } catch (err) {
+    console.error('Workshop fetch error:', err);
+    res.status(500).json({ success: false, error: 'Failed to fetch workshop' });
+  }
+});
+
 app.post('/api/admin/workshops', upload.single('image'), async (req, res) => {
   try {
     if (!req.session.user || !req.session.user.isAdmin) {
@@ -3092,6 +3254,31 @@ app.post('/api/admin/workshops', upload.single('image'), async (req, res) => {
   } catch (err) {
     console.error('Workshop create error:', err);
     res.status(500).json({ success: false, error: 'Failed to create workshop' });
+  }
+});
+
+app.put('/api/admin/workshops/:id', upload.single('image'), async (req, res) => {
+  try {
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ success: false, error: 'Admin access required' });
+    }
+    const { id } = req.params;
+    const { title, description, price, strikePrice, dateTime } = req.body;
+
+    const update = {};
+    if (typeof title !== 'undefined') update.title = String(title).trim();
+    if (typeof description !== 'undefined') update.description = String(description).trim();
+    if (typeof price !== 'undefined' && price !== '') update.price = Number(price);
+    if (typeof strikePrice !== 'undefined' && strikePrice !== '') update.strikePrice = Number(strikePrice);
+    if (typeof dateTime !== 'undefined') update.dateTime = dateTime ? new Date(dateTime) : null;
+    if (req.file) update.image = req.file.path;
+
+    const ws = await Workshop.findByIdAndUpdate(id, update, { new: true });
+    if (!ws) return res.status(404).json({ success: false, error: 'Workshop not found' });
+    res.json({ success: true, workshop: ws });
+  } catch (err) {
+    console.error('Workshop update error:', err);
+    res.status(500).json({ success: false, error: 'Failed to update workshop' });
   }
 });
 
@@ -3389,7 +3576,94 @@ app.post('/api/gemini', async (req, res) => {
   }
 });
 
+// Automated Email Reminder System
+async function checkAndSendReminders() {
+  try {
+    const now = new Date();
+    const reminders = await EmailReminder.find().populate('workshopId');
+
+    for (const reminder of reminders) {
+      if (!reminder.workshopId || !reminder.workshopDateTime) continue;
+
+      const workshopTime = new Date(reminder.workshopDateTime);
+      const timeDiff = workshopTime.getTime() - now.getTime();
+      const hoursDiff = timeDiff / (1000 * 60 * 60);
+      const minutesDiff = timeDiff / (1000 * 60);
+
+      // Send morning reminder (on the day of workshop, early morning - 6 AM)
+      const workshopDate = new Date(workshopTime);
+      workshopDate.setHours(6, 0, 0, 0); // 6 AM on workshop day
+      const morningReminderTime = workshopDate.getTime() - now.getTime();
+      
+      if (!reminder.morningReminderSent && morningReminderTime <= 0 && morningReminderTime > -3600000) { // Within 1 hour window
+        try {
+          await transporter.sendMail({
+            from: EMAIL_FROM,
+            to: reminder.userEmail,
+            subject: `🌅 Today's Workshop: ${reminder.workshopTitle}`,
+            html: `
+              <h2>Good Morning! Your Workshop is Today</h2>
+              <p>Hello,</p>
+              <p>This is a friendly reminder that you have a workshop today:</p>
+              <p><strong>Workshop:</strong> ${reminder.workshopTitle}</p>
+              <p><strong>Time:</strong> ${workshopTime.toLocaleString()}</p>
+              ${reminder.meetingLink ? `<p><strong>Meeting Link:</strong> <a href="${reminder.meetingLink}">${reminder.meetingLink}</a></p>` : ''}
+              <p>Please make sure you're ready to join on time!</p>
+              <p>Best Regards,<br>Career Redefine Team</p>
+            `
+          });
+
+          reminder.morningReminderSent = true;
+          reminder.morningReminderSentAt = new Date();
+          await reminder.save();
+          console.log(`Morning reminder sent to ${reminder.userEmail} for workshop: ${reminder.workshopTitle}`);
+        } catch (mailErr) {
+          console.error('Morning reminder email failed:', mailErr?.message || mailErr);
+        }
+      }
+
+      // Send 10-minute reminder
+      if (!reminder.tenMinuteReminderSent && minutesDiff <= 10 && minutesDiff > 0) {
+        try {
+          await transporter.sendMail({
+            from: EMAIL_FROM,
+            to: reminder.userEmail,
+            subject: `⏰ Starting Soon: ${reminder.workshopTitle}`,
+            html: `
+              <h2>Workshop Starting in 10 Minutes!</h2>
+              <p>Hello,</p>
+              <p>Your workshop is starting in just 10 minutes:</p>
+              <p><strong>Workshop:</strong> ${reminder.workshopTitle}</p>
+              <p><strong>Time:</strong> ${workshopTime.toLocaleString()}</p>
+              ${reminder.meetingLink ? `
+                <p><strong>Join Now:</strong> <a href="${reminder.meetingLink}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Join Meeting</a></p>
+              ` : ''}
+              <p>Please join the meeting now to ensure you don't miss anything!</p>
+              <p>Best Regards,<br>Career Redefine Team</p>
+            `
+          });
+
+          reminder.tenMinuteReminderSent = true;
+          reminder.tenMinuteReminderSentAt = new Date();
+          await reminder.save();
+          console.log(`10-minute reminder sent to ${reminder.userEmail} for workshop: ${reminder.workshopTitle}`);
+        } catch (mailErr) {
+          console.error('10-minute reminder email failed:', mailErr?.message || mailErr);
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error in reminder system:', error);
+  }
+}
+
+// Run reminder check every minute
+setInterval(checkAndSendReminders, 60000); // 60 seconds
+
+// Also run once on startup
+setTimeout(checkAndSendReminders, 5000); // Wait 5 seconds after startup
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('📧 Email reminder system started');
 });

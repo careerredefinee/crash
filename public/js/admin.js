@@ -57,9 +57,14 @@ async function loadWorkshops() {
                         <div class="small text-muted mb-2"><i class="fa-regular fa-calendar me-1"></i>${dateText}</div>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-success fw-bold">${priceHtml}</span>
-                            <button class="btn btn-sm btn-danger" onclick="deleteWorkshop('${ws._id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-primary" onclick="startEditWorkshop('${ws._id}')">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteWorkshop('${ws._id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -226,6 +231,91 @@ function showAddWorkshopModal() {
     modal.show();
 }
 
+// Helper to format Date to input[type=datetime-local] value (local time)
+function toDatetimeLocalValue(date) {
+    if (!date) return '';
+    const d = new Date(date);
+    const pad = (n) => String(n).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const mi = pad(d.getMinutes());
+    return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+}
+
+let editingWorkshopId = null;
+
+async function startEditWorkshop(id) {
+    try {
+        const res = await fetch(`/api/workshops/${id}`);
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+            showAlert(data.error || 'Failed to fetch workshop', 'danger');
+            return;
+        }
+        const ws = data.workshop;
+        editingWorkshopId = ws._id;
+        document.getElementById('ewTitle').value = ws.title || '';
+        document.getElementById('ewDesc').value = ws.description || '';
+        document.getElementById('ewPrice').value = typeof ws.price === 'number' ? ws.price : '';
+        document.getElementById('ewStrike').value = typeof ws.strikePrice === 'number' ? ws.strikePrice : '';
+        document.getElementById('ewDateTime').value = ws.dateTime ? toDatetimeLocalValue(ws.dateTime) : '';
+
+        const modal = new bootstrap.Modal(document.getElementById('editWorkshopModal'));
+        modal.show();
+    } catch (err) {
+        console.error('startEditWorkshop error', err);
+        showAlert('Failed to start editing workshop', 'danger');
+    }
+}
+
+async function handleEditWorkshop(e) {
+    e.preventDefault();
+    if (!editingWorkshopId) {
+        showAlert('No workshop selected', 'danger');
+        return;
+    }
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const original = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving'; }
+    try {
+        const fd = new FormData();
+        fd.append('title', document.getElementById('ewTitle').value.trim());
+        fd.append('description', document.getElementById('ewDesc').value.trim());
+        const price = document.getElementById('ewPrice').value;
+        const strike = document.getElementById('ewStrike').value;
+        const dt = document.getElementById('ewDateTime').value;
+        const img = document.getElementById('ewImage').files[0];
+        if (price !== '') fd.append('price', price);
+        if (strike !== '') fd.append('strikePrice', strike);
+        // Allow clearing date (Coming soon)
+        fd.append('dateTime', dt);
+        if (img) fd.append('image', img);
+
+        const res = await fetch(`/api/admin/workshops/${editingWorkshopId}`, { method: 'PUT', body: fd });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            showAlert('Workshop updated', 'success');
+            const modalEl = document.getElementById('editWorkshopModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            form.reset();
+            editingWorkshopId = null;
+            await loadWorkshops();
+            await loadDashboardStats?.();
+        } else {
+            showAlert(data.error || 'Failed to update workshop', 'danger');
+        }
+    } catch (err) {
+        console.error('handleEditWorkshop error', err);
+        showAlert('Failed to update workshop', 'danger');
+    } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = original; }
+    }
+}
+
 // Check if user is authenticated and admin
 async function checkAdminAuth() {
     try {
@@ -329,6 +419,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Initialize forms with null checks
         const addCourseForm = document.getElementById('addCourseForm');
         const addWorkshopForm = document.getElementById('addWorkshopForm');
+        const editWorkshopForm = document.getElementById('editWorkshopForm');
         
         if (addCourseForm) {
             addCourseForm.addEventListener('submit', handleAddCourse);
@@ -336,6 +427,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         if (addWorkshopForm) {
             addWorkshopForm.addEventListener('submit', handleAddWorkshop);
+        }
+        if (editWorkshopForm) {
+            editWorkshopForm.addEventListener('submit', handleEditWorkshop);
         }
         
     } catch (error) {
@@ -1012,14 +1106,14 @@ function loadPremiumPayments(payments) {
 
 async function loadCallRequests() {
     try {
-        const res = await fetch('/api/admin/contacts');
+        const res = await fetch('/api/admin/call-requests');
         const requests = await res.json();
 
         const tbody = document.getElementById('callRequestsTableBody');
         tbody.innerHTML = '';
 
         if (!requests.length) {
-            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No call requests found</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No call requests found</td></tr>`;
             return;
         }
 
@@ -1028,8 +1122,7 @@ async function loadCallRequests() {
             row.innerHTML = `
                 <td>${r.name}</td>
                 <td>${r.email}</td>
-                <td>${r.phone}</td>
-                <td>${r.message}</td>
+                <td>${r.message || '-'}</td>
                 <td>${new Date(r.createdAt).toLocaleString()}</td>
                 <td>
                     <button class="btn btn-sm btn-danger" onclick="deleteCallRequest('${r._id}')">Delete</button>
@@ -1043,15 +1136,15 @@ async function loadCallRequests() {
 }
 
 async function deleteCallRequest(id) {
-    if (!confirm('Are you sure you want to delete this contact?')) return;
-    const resp = await fetch(`/api/admin/contacts/${id}`, { method: 'DELETE' });
+    if (!confirm('Are you sure you want to delete this call request?')) return;
+    const resp = await fetch(`/api/admin/call-requests/${id}`, { method: 'DELETE' });
     const data = await resp.json();
 
     if (data.success) {
-        alert("Contact deleted successfully!");
+        showAlert("Call request deleted successfully!", 'success');
         loadCallRequests();
     } else {
-        alert("Failed to delete contact");
+        showAlert("Failed to delete call request", 'danger');
     }
 }
 
@@ -3060,5 +3153,130 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Email Reminders functionality
+async function loadReminders() {
+    try {
+        const res = await fetch('/api/admin/reminders');
+        const reminders = await res.json();
+
+        const tbody = document.getElementById('remindersTableBody');
+        tbody.innerHTML = '';
+
+        if (!reminders.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No reminders found</td></tr>`;
+            return;
+        }
+
+        reminders.forEach(r => {
+            const row = document.createElement('tr');
+            const statusBadges = [];
+            if (r.enrollmentEmailSent) statusBadges.push('<span class="badge bg-success">Enrollment</span>');
+            if (r.morningReminderSent) statusBadges.push('<span class="badge bg-info">Morning</span>');
+            if (r.tenMinuteReminderSent) statusBadges.push('<span class="badge bg-warning">10min</span>');
+            
+            row.innerHTML = `
+                <td>${r.userEmail}</td>
+                <td>${r.workshopTitle}</td>
+                <td>${new Date(r.workshopDateTime).toLocaleString()}</td>
+                <td>${r.meetingLink ? `<a href="${r.meetingLink}" target="_blank">Link</a>` : '-'}</td>
+                <td>${statusBadges.join(' ') || '<span class="badge bg-secondary">None</span>'}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="editReminder('${r._id}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteReminder('${r._id}')">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    } catch (err) {
+        console.error('Error loading reminders:', err);
+    }
+}
+
+function showAddReminderModal() {
+    // Load workshops for dropdown
+    loadWorkshopsForReminder();
+    const modal = new bootstrap.Modal(document.getElementById('addReminderModal'));
+    modal.show();
+}
+
+async function loadWorkshopsForReminder() {
+    try {
+        const res = await fetch('/api/workshops');
+        const payload = await res.json();
+        const workshops = payload.workshops || [];
+        const select = document.getElementById('reminderWorkshop');
+        select.innerHTML = '<option value="">Select Workshop</option>';
+        
+        workshops.forEach(ws => {
+            const option = document.createElement('option');
+            option.value = ws._id;
+            option.textContent = ws.title;
+            option.dataset.datetime = ws.dateTime;
+            select.appendChild(option);
+        });
+    } catch (err) {
+        console.error('Error loading workshops for reminder:', err);
+    }
+}
+
+async function submitReminder() {
+    const email = document.getElementById('reminderEmail').value.trim();
+    const workshopId = document.getElementById('reminderWorkshop').value;
+    const meetingLink = document.getElementById('reminderMeetingLink').value.trim();
+
+    if (!email || !workshopId) {
+        showAlert('Email and workshop are required', 'danger');
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/admin/reminders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userEmail: email, workshopId, meetingLink })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            showAlert('Reminder added successfully!', 'success');
+            document.getElementById('addReminderForm').reset();
+            bootstrap.Modal.getInstance(document.getElementById('addReminderModal')).hide();
+            loadReminders();
+        } else {
+            showAlert(data.error || 'Failed to add reminder', 'danger');
+        }
+    } catch (err) {
+        console.error('Error adding reminder:', err);
+        showAlert('Network error. Please try again.', 'danger');
+    }
+}
+
+async function deleteReminder(id) {
+    if (!confirm('Are you sure you want to delete this reminder?')) return;
+    
+    try {
+        const res = await fetch(`/api/admin/reminders/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+
+        if (data.success) {
+            showAlert('Reminder deleted successfully!', 'success');
+            loadReminders();
+        } else {
+            showAlert('Failed to delete reminder', 'danger');
+        }
+    } catch (err) {
+        console.error('Error deleting reminder:', err);
+        showAlert('Network error. Please try again.', 'danger');
+    }
+}
+
+// Add event listener for reminders tab
+document.addEventListener('DOMContentLoaded', function() {
+    const remindersTab = document.querySelector('a[href="#reminders"]');
+    if (remindersTab) {
+        remindersTab.addEventListener('shown.bs.tab', loadReminders);
+    }
+});
 
 // Duplicate DOMContentLoaded initializer removed to avoid calling unsupported loaders

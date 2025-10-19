@@ -35,3 +35,39 @@ async function submitContact(e) {
     if (btn) { btn.disabled = false; btn.innerHTML = original; }
   }
 }
+
+function showCallRequestModal() {
+  const modal = new bootstrap.Modal(document.getElementById('callRequestModal'));
+  modal.show();
+}
+
+async function submitCallRequest() {
+  const name = document.getElementById('callName').value.trim();
+  const email = document.getElementById('callEmail').value.trim();
+  const message = document.getElementById('callMessage').value.trim();
+
+  if (!name || !email) {
+    showAlert('Name and email are required', 'danger');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/call-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      showAlert('Call request submitted successfully! We will contact you soon.', 'success');
+      document.getElementById('callRequestForm').reset();
+      bootstrap.Modal.getInstance(document.getElementById('callRequestModal')).hide();
+    } else {
+      showAlert(data.error || 'Failed to submit call request', 'danger');
+    }
+  } catch (err) {
+    console.error('Call request error:', err);
+    showAlert('Network error. Please try again.', 'danger');
+  }
+}
