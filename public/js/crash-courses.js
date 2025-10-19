@@ -29,9 +29,9 @@ function crashCourseCard(c) {
   const img = c.image ? `<img src="${c.image}" class="card-img-top" alt="${c.title}" style="height:200px; object-fit:cover;">`
     : `<div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:200px;"><i class="fas fa-graduation-cap text-secondary fs-1"></i></div>`;
   const duration = c.duration ? `<span class="badge bg-secondary me-2">${c.duration}</span>` : '';
-  const pricing = (c.price && c.price > 0)
-    ? `<span class="fw-bold">₹${c.price}</span> ${c.strikePrice && c.strikePrice > 0 ? `<span class="text-muted text-decoration-line-through ms-2">₹${c.strikePrice}</span>` : ''}`
-    : '';
+  const currentPrice = (c.price && c.price > 0) ? `<span class="fw-bold">₹${c.price}</span>` : '';
+  const strikePrice = (c.strikePrice && c.strikePrice > 0) ? `<span class="text-muted text-decoration-line-through">₹${c.strikePrice}</span>` : '';
+  
   return `
   <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
     <div class="card h-100 shadow-sm">
@@ -39,9 +39,14 @@ function crashCourseCard(c) {
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">${c.title || 'Crash Course'}</h5>
         <p class="card-text text-muted small">${(c.description||'').substring(0,120)}${(c.description||'').length>120?'...':''}</p>
-        <div class="mt-auto d-flex justify-content-between align-items-center">
-          <div>${duration}${pricing}</div>
-          <button class="btn btn-primary btn-sm" onclick="openEnroll('${c._id}')">Enroll</button>
+        <div class="mt-auto">
+          ${duration ? `<div class="mb-2">${duration}</div>` : ''}
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+              ${strikePrice}${currentPrice}
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openEnroll('${c._id}')">Enroll</button>
+          </div>
         </div>
       </div>
     </div>

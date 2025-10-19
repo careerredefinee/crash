@@ -28,9 +28,9 @@ async function loadAllWorkshops() {
 function workshopCard(w) {
   const img = w.image ? `<img src="${w.image}" class="card-img-top" alt="${w.title}" style="height:200px; object-fit:cover;">`
     : `<div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:200px;"><i class="fas fa-people-group text-secondary fs-1"></i></div>`;
-  const pricing = (w.price && w.price > 0)
-    ? `<span class="fw-bold">₹${w.price}</span> ${w.strikePrice && w.strikePrice > 0 ? `<span class="text-muted text-decoration-line-through ms-2">₹${w.strikePrice}</span>` : ''}`
-    : 'Free';
+  const currentPrice = (w.price && w.price > 0) ? `<span class="fw-bold">₹${w.price}</span>` : '';
+  const strikePrice = (w.strikePrice && w.strikePrice > 0) ? `<span class="text-muted text-decoration-line-through">₹${w.strikePrice}</span>` : '';
+  const pricing = (w.price && w.price > 0) ? `<div class="d-flex align-items-center gap-2">${strikePrice}${currentPrice}</div>` : 'Free';
   const dateText = w.dateTime ? new Date(w.dateTime).toLocaleString() : 'Coming soon';
   return `
   <div class="col-lg-3 col-md-4 col-sm-6 mb-4">

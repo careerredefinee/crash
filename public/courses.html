@@ -60,6 +60,23 @@
         </div>
     </div>
 </nav>
+<!-- Crash Courses Hero Section -->
+<section style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 100px 20px; text-align: center; position: relative; overflow: hidden;">
+  <!-- Decorative circles -->
+  <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: absolute; bottom: -60px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+
+  <!-- Content -->
+  <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Master New Skills with Our Crash Courses</h1>
+  <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px;">
+    Dive into intensive, expertly designed crash courses that help you learn fast, gain practical knowledge, 
+    and boost your career potential in record time.
+  </p>
+  <a href="#crash-courses" style="padding: 15px 35px; font-size: 1.1rem; background: #ffd700; color: #333; text-decoration: none; border-radius: 50px; transition: 0.3s;">
+    Explore Crash Courses
+  </a>
+</section>
+
 
 <div class="main-content">
 <!-- Mobile Bottom Navigation 
@@ -114,6 +131,66 @@ Header Section -->
     </section>
     </div>
 
+    <!-- Skill Growth Section (Redesigned for Crash Courses & Workshops) -->
+<section style="background: linear-gradient(135deg, #fdfbff, #eef5ff); padding: 80px 0; font-family: 'Poppins', sans-serif; text-align: center;">
+  <h2 style="color: #1c1c1c; font-size: 34px; font-weight: 700; margin-bottom: 15px; letter-spacing: 1px;">Accelerate Your Learning Journey</h2>
+  <p style="max-width: 780px; margin: 0 auto 50px auto; color: #555; font-size: 17px; line-height: 1.6;">
+    Our intensive crash courses and workshops are designed to fast-track your career with hands-on learning, expert guidance,
+    and real-world applications — helping you master in-demand skills in minimal time.
+  </p>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; max-width: 1150px; margin: 0 auto;">
+
+    <!-- Fast Learning Block -->
+    <div style="background: #6c63ff; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+      <div style="font-size: 40px; margin-bottom: 18px;">⚡</div>
+      <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Intensive Learning</h3>
+      <p style="font-size: 15px; line-height: 1.6;">
+        Short, powerful sessions focused on practical understanding and rapid skill advancement.
+      </p>
+    </div>
+
+    <!-- Mentorship Block -->
+    <div style="background: #ff6b81; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+      <div style="font-size: 40px; margin-bottom: 18px;">🎓</div>
+      <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Expert Mentorship</h3>
+      <p style="font-size: 15px; line-height: 1.6;">
+        Get coached by professionals who bring real-world insights and personalized learning support.
+      </p>
+    </div>
+
+   <!-- Expert-Led Learning Block -->
+<div style="background: #00b894; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+  <div style="font-size: 40px; margin-bottom: 18px;">🧠</div>
+  <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Expert-Led Learning</h3>
+  <p style="font-size: 15px; line-height: 1.6;">
+    Gain in-depth knowledge from industry professionals who simplify complex concepts with practical insights.
+  </p>
+</div>
+
+<!-- Comprehensive Curriculum Block -->
+<div style="background: #f8b400; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+  <div style="font-size: 40px; margin-bottom: 18px;">📘</div>
+  <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Comprehensive Curriculum</h3>
+  <p style="font-size: 15px; line-height: 1.6;">
+    Explore well-structured modules that cover every essential topic to master your chosen crash course effectively.
+  </p>
+</div>
+
+  </div>
+
+  <script>
+    const boxes = document.querySelectorAll('section div[style*="box-shadow"]');
+    boxes.forEach(b => {
+      b.addEventListener('mouseenter', () => {
+        b.style.transform = 'translateY(-10px) scale(1.03)';
+      });
+      b.addEventListener('mouseleave', () => {
+        b.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+  </script>
+</section>
     <footer style="
     background: linear-gradient(
         90deg, 
@@ -285,8 +362,6 @@ Header Section -->
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 -->
 
     <!-- Success Modal -->
@@ -302,7 +377,6 @@ Header Section -->
     </div>
   </div>
 </div>
->>>>>>> 1d53c35 (Updated project files)
 <!-- Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -317,10 +391,6 @@ Header Section -->
     </div>
   </div>
   
-<<<<<<< HEAD
-=======
-
->>>>>>> 1d53c35 (Updated project files)
     <script src="/js/common.js"></script>
     <script src="/js/home.js"></script>
     <script src="/js/courses.js"></script>

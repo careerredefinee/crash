@@ -70,10 +70,9 @@ async function renderRecentCrashCourses() {
 }
 
 function createCrashCourseCard(c) {
-    const priceHtml = (c.price && c.price > 0)
-        ? `<div><span class="fw-bold">₹${c.price}</span> ${c.strikePrice && c.strikePrice > 0 ? `<span class="text-muted text-decoration-line-through ms-2">₹${c.strikePrice}</span>` : ''}</div>`
-        : '';
-    const durationHtml = c.duration ? `<span class="badge bg-secondary me-2">${c.duration}</span>` : '';
+    const currentPrice = (c.price && c.price > 0) ? `<span class="fw-bold">₹${c.price}</span>` : '';
+    const strikePrice = (c.strikePrice && c.strikePrice > 0) ? `<span class="text-muted text-decoration-line-through">₹${c.strikePrice}</span>` : '';
+    const durationHtml = c.duration ? `<span class="badge bg-secondary">${c.duration}</span>` : '';
     const img = c.image ? `<img src="${c.image}" class="card-img-top" alt="${c.title}" style="height:180px; object-fit:cover;">` :
         `<div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:180px;"><i class="fas fa-graduation-cap text-secondary fs-1"></i></div>`;
     return `
@@ -83,9 +82,14 @@ function createCrashCourseCard(c) {
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${c.title || 'Crash Course'}</h5>
           <p class="card-text text-muted small">${(c.description || '').substring(0,100)}${(c.description||'').length>100?'...':''}</p>
-          <div class="mt-auto d-flex justify-content-between align-items-center">
-            <div>${durationHtml}${priceHtml}</div>
-            <button class="btn btn-primary btn-sm" onclick="openCrashEnroll('${c._id}', '${(c.title||'Crash Course').replace(/'/g, "&#39;")}')">Enroll</button>
+          <div class="mt-auto">
+            ${durationHtml ? `<div class="mb-2">${durationHtml}</div>` : ''}
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                ${strikePrice}${currentPrice}
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openCrashEnroll('${c._id}', '${(c.title||'Crash Course').replace(/'/g, "&#39;")}')">Enroll</button>
+            </div>
           </div>
         </div>
       </div>
@@ -198,9 +202,9 @@ async function renderRecentWorkshops() {
 function createWorkshopCard(w) {
     const img = w.image ? `<img src="${w.image}" class="card-img-top" alt="${w.title}" style="height:180px; object-fit:cover;">` :
         `<div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:180px;"><i class="fas fa-people-group text-secondary fs-1"></i></div>`;
-    const priceHtml = (w.price && w.price > 0)
-        ? `<div><span class="fw-bold">₹${w.price}</span> ${w.strikePrice && w.strikePrice > 0 ? `<span class=\"text-muted text-decoration-line-through ms-2\">₹${w.strikePrice}</span>` : ''}</div>`
-        : '';
+    const currentPrice = (w.price && w.price > 0) ? `<span class="fw-bold">₹${w.price}</span>` : '';
+    const strikePrice = (w.strikePrice && w.strikePrice > 0) ? `<span class="text-muted text-decoration-line-through">₹${w.strikePrice}</span>` : '';
+    const priceHtml = (strikePrice || currentPrice) ? `<div class="d-flex align-items-center gap-2">${strikePrice}${currentPrice}</div>` : '';
     const dateText = w.dateTime ? new Date(w.dateTime).toLocaleString() : 'Coming soon';
     return `
     <div class="col-md-3 mb-4">

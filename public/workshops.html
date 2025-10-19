@@ -24,13 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/courses">Courses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/workshops">Workshops</a>
+                        <a class="nav-link active" href="/workshops">Workshops</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
@@ -45,22 +45,39 @@
                         <a href="/login" class="btn btn-outline-primary me-2">Login</a>
                     </div>
                     <div id="userSection" style="display: none;">
-                        <div class="dropdown">
+                        <div class="dropdown d-inline-block">
                             <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
-                                <img id="navProfileAvatar" src="/images/default-avatar.png" alt="Profile" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" onerror="this.src='/images/default-avatar.png';">
+                                <img id="navProfileAvatar" src="/images/default-avatar.png" class="rounded-circle" width="40" height="40" alt="Profile Picture" style="object-fit:cover;">
                             </a>
-<ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/profile">Profile</a></li>
-    <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
-</ul>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+    <!-- Workshop Hero Section -->
+<section style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 100px 20px; text-align: center; position: relative; overflow: hidden;">
+  <!-- Decorative circles -->
+  <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: absolute; bottom: -60px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
 
-  <main style="padding-top: 80px;">
+  <!-- Content -->
+  <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Elevate Your Skills with Our Workshops</h1>
+  <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px;">
+    Join hands-on workshops designed to enhance your expertise, connect with industry experts, 
+    and unlock new opportunities in your career journey.
+  </p>
+  <a href="#workshops" style="padding: 15px 35px; font-size: 1.1rem; background: #ff6b6b; color: white; text-decoration: none; border-radius: 50px; transition: 0.3s;">
+    Explore Workshops
+  </a>
+</section>
+
+
+  <main style="padding-top: 2px;">
     <section class="py-5 bg-light">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -72,6 +89,54 @@
       </div>
     </section>
   </main>
+<section style="padding:20px 20px; background:#f9fbff; text-align:center;">
+  <h2 style="font-size:32px; font-weight:700; margin-bottom:10px; color:#111;">
+    Enhance Your Expertise with Our Workshops
+  </h2>
+  <p style="font-size:17px; color:#555; margin-bottom:50px;">
+    Hands-on sessions designed to strengthen your skills through practical experience and collaboration.
+  </p>
+
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:25px;">
+
+    <!-- Workshop Block 1 -->
+    <div style="background:#6c63ff; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+      <div style="font-size:40px; margin-bottom:18px;">🧰</div>
+      <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Practical Skill Training</h3>
+      <p style="font-size:15px; line-height:1.6;">
+        Engage in real-world exercises focused on modern tools and techniques used by industry experts.
+      </p>
+    </div>
+
+    <!-- Workshop Block 2 -->
+    <div style="background:#ff6b6b; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+      <div style="font-size:40px; margin-bottom:18px;">🤝</div>
+      <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Collaborative Learning</h3>
+      <p style="font-size:15px; line-height:1.6;">
+        Connect with peers and mentors to exchange ideas and solve problems in a team-driven setting.
+      </p>
+    </div>
+
+    <!-- Workshop Block 3 -->
+    <div style="background:#00b894; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+      <div style="font-size:40px; margin-bottom:18px;">💡</div>
+      <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Innovation Sessions</h3>
+      <p style="font-size:15px; line-height:1.6;">
+        Explore creative ideas, apply innovative approaches, and develop problem-solving strategies.
+      </p>
+    </div>
+
+    <!-- Workshop Block 4 -->
+    <div style="background:#f8b400; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+      <div style="font-size:40px; margin-bottom:18px;">🎯</div>
+      <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Outcome-Focused Results</h3>
+      <p style="font-size:15px; line-height:1.6;">
+        Every workshop concludes with measurable takeaways — boosting your skills and professional readiness.
+      </p>
+    </div>
+
+  </div>
+</section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/common.js"></script>

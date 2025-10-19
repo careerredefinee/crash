@@ -44,27 +44,36 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          
-          <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-         
-          <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
-        </ul>
-        <div class="d-flex align-items-center">
-          <div id="authSection">
-            <a href="/login" class="btn btn-outline-primary me-2">Login</a>
-          </div>
-          <div id="userSection" style="display:none;">
-            <div class="dropdown">
-              <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
-                <img id="navProfileAvatar" src="/images/default-avatar.png" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;">
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
-              </ul>
+             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/courses">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/workshops">Workshops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/about">About</a>
+                </li>
+            </ul>
+                <div class="d-flex align-items-center">
+                <div id="authSection">
+                    <a href="/login" class="btn btn-outline-primary me-2">Login</a>
+                </div>
+                <div id="userSection" style="display: none;">
+<div class="dropdown d-inline-block">
+<a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+  <img id="navProfileAvatar" src="/images/default-avatar.png" class="rounded-circle" width="40" height="40" alt="Profile Picture" style="object-fit:cover;">
+</a>
+<ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+  <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+</ul>
             </div>
           </div>
         </div>
