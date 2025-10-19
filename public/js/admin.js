@@ -402,19 +402,41 @@ document.addEventListener('DOMContentLoaded', async function() {
             resumesTab.addEventListener('shown.bs.tab', loadResumes);
         }
         
-        // Set up tab event listeners for all tabs
-        const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
-        tabEls.forEach(tabEl => {
-            tabEl.addEventListener('shown.bs.tab', function (event) {
-                const target = event.target.getAttribute('data-bs-target');
-                // Handle tab-specific initialization
-                if (target === '#resumes') {
-                    loadResumes();
-                } else if (target === '#callrequests') {
-                    loadCallRequests();
-                }
+        // Fallback: manual tab switching + deep-linking via hash
+        function activateTab(hash) {
+            if (!hash) return;
+            const link = document.querySelector(`a[data-bs-toggle="tab"][href="${hash}"]`);
+            const pane = document.querySelector(hash);
+            if (!pane) return;
+            // Deactivate all
+            document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active','show'));
+            // Activate selected
+            if (link) link.classList.add('active');
+            pane.classList.add('active','show');
+            // Lazy-load per-tab content
+            if (hash === '#workshops') loadWorkshops();
+            if (hash === '#courses') loadCourses?.();
+            if (hash === '#users') loadUsers?.();
+            if (hash === '#enrollments') { loadCrashEnrollments(); loadWorkshopRegistrations(); }
+            if (hash === '#callrequests') loadCallRequests();
+            if (hash === '#reminders') loadReminders?.();
+        }
+
+        // Click handling on sidebar links
+        document.querySelectorAll('.sidebar a[data-bs-toggle="tab"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = a.getAttribute('href');
+                history.replaceState(null, '', href);
+                activateTab(href);
             });
         });
+
+        // On load, open hash tab if present
+        if (location.hash) {
+            activateTab(location.hash);
+        }
         
         // Initialize forms with null checks
         const addCourseForm = document.getElementById('addCourseForm');
