@@ -191,6 +191,243 @@ Header Section -->
     });
   </script>
 </section>
+
+
+<!-- ================= CareerRedefine Mastermind Light Theme Section ================= -->
+<section id="mastermind-light" style="font-family:'Poppins',sans-serif;margin:0;padding:0;">
+
+  <style>
+    /* Overall Section Styling */
+    #mastermind-light {
+      background:#f9fbff;
+      color:#333;
+    }
+
+    #mastermind-light h2 {
+      color:#007bff;
+      border-left:5px solid #00b4ff;
+      padding-left:10px;
+      margin-bottom:15px;
+      font-size:1.6rem;
+    }
+
+    #mastermind-light p {
+      color:#555;
+      line-height:1.6;
+    }
+
+    #mastermind-light ul {
+      list-style:none;
+      padding-left:0;
+    }
+
+    #mastermind-light ul li {
+      margin:8px 0;
+      padding-left:25px;
+      position:relative;
+    }
+
+    #mastermind-light ul li::before {
+      content:"✔";
+      color:#00b4ff;
+      position:absolute;
+      left:0;
+      top:0;
+      font-size:1rem;
+    }
+
+    /* 1️⃣ Combined Learning Section */
+    #learn-combined {
+      background:linear-gradient(135deg,#e9f5ff,#ffffff);
+      padding:60px 20px;
+      text-align:left;
+    }
+    #learn-combined .inner {
+      max-width:1000px;
+      margin:auto;
+    }
+    #learn-combined .topics {
+      display:flex;
+      flex-wrap:wrap;
+      gap:25px;
+      margin-top:25px;
+    }
+    #learn-combined .topic {
+      flex:1 1 280px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      padding:20px;
+      transition:transform 0.3s ease;
+    }
+    #learn-combined .topic:hover {
+      transform:translateY(-5px);
+    }
+    #learn-combined .icon {
+      font-size:35px;
+      margin-bottom:10px;
+    }
+
+    /* 2️⃣ Certificate Section */
+    #certificate-light {
+      background:linear-gradient(135deg,#ffffff,#f3f9ff);
+      padding:60px 20px;
+    }
+    #certificate-light .inner {
+      max-width:900px;
+      margin:auto;
+      text-align:center;
+    }
+    #certificate-light img {
+      width:100%;
+      max-width:700px;
+      border-radius:8px;
+      margin-top:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 3️⃣ FAQ Section */
+    #faq-light {
+      max-width:900px;
+      margin:60px auto;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      padding:30px 25px;
+    }
+    #faq-light h2 {
+      color:#007bff;
+      border-left:5px solid #00b4ff;
+      padding-left:10px;
+    }
+    #faq-light .faq-item {
+      border-bottom:1px solid #eee;
+      padding:12px 0;
+    }
+    #faq-light .faq-question {
+      cursor:pointer;
+      font-weight:600;
+      color:#007bff;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      transition:color 0.3s;
+    }
+    #faq-light .faq-question:hover { color:#0056b3; }
+    #faq-light .faq-answer {
+      display:none;
+      color:#444;
+      padding:10px 0 0 5px;
+      line-height:1.5;
+    }
+
+    @media(max-width:768px){
+      #learn-combined .topics { flex-direction:column; align-items:center; }
+      #learn-combined .topic { width:90%; }
+    }
+  </style>
+
+  <!-- ================= Section 1: Combined Learning Section ================= -->
+  <section id="learn-combined">
+    <div class="inner">
+      <h2>Grow, Lead & Redefine — What You Will Learn</h2>
+      <p>Whether you're starting your journey, leading teams, or driving innovation — this mastermind empowers you to develop critical universal skills for success.</p>
+
+      <div class="topics">
+        <div class="topic">
+          <div class="icon">📘</div>
+          <h3>Strategic & Leadership Skills</h3>
+          <ul>
+            <li>Strategic Thinking & Decision Making</li>
+            <li>Leading with Vision & Confidence</li>
+            <li>Team Collaboration & Empowerment</li>
+          </ul>
+        </div>
+
+        <div class="topic">
+          <div class="icon">💡</div>
+          <h3>Personal & Professional Growth</h3>
+          <ul>
+            <li>Effective Communication & Influence</li>
+            <li>Innovation & Creative Problem Solving</li>
+            <li>Time Management & Productivity</li>
+          </ul>
+        </div>
+
+        <div class="topic">
+          <div class="icon">🚀</div>
+          <h3>Upskill Your Team</h3>
+          <ul>
+            <li>Self-paced Learning Experience</li>
+            <li>Mentor Office Hours & Support</li>
+            <li>Real-world Project-driven Learning</li>
+            <li>Global Learner Community Access</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Section 2: Certificate ================= -->
+  <section id="certificate-light">
+    <div class="inner">
+      <div class="icon" style="font-size:45px;">🎓</div>
+      <h2>CareerRedefine Certificate</h2>
+      <p><strong>Yes!</strong> Upon completion of this mastermind program, you'll earn a <strong>CareerRedefine Certificate</strong> — a trusted symbol of your commitment to professional growth and lifelong learning.</p>
+      <img src="certificate.png" alt="CareerRedefine Certificate">
+    </div>
+  </section>
+
+  <!-- ================= Section 3: FAQ ================= -->
+  <section id="faq-light">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">Who can join this program? <span>+</span></div>
+      <div class="faq-answer">Anyone eager to elevate their skills — whether you're an entrepreneur, manager, or specialist looking to grow.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Do I need prior experience? <span>+</span></div>
+      <div class="faq-answer">No, this program welcomes all levels. The curriculum adapts to your goals and learning pace.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Is this program self-paced? <span>+</span></div>
+      <div class="faq-answer">Yes. Learn at your own pace with access to recorded content and optional mentor sessions.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Will I get lifetime access? <span>+</span></div>
+      <div class="faq-answer">Absolutely. Once enrolled, you’ll have lifetime access to all updates and resources.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Do I get a certificate? <span>+</span></div>
+      <div class="faq-answer">Yes! You’ll receive a verified CareerRedefine Certificate to showcase your achievement.</div>
+    </div>
+  </section>
+
+  <!-- Inline JavaScript -->
+  <script>
+    document.querySelectorAll('#faq-light .faq-question').forEach(q=>{
+      q.addEventListener('click',()=>{
+        const ans=q.nextElementSibling;
+        const icon=q.querySelector('span');
+        const open=ans.style.display==='block';
+        document.querySelectorAll('#faq-light .faq-answer').forEach(a=>a.style.display='none');
+        document.querySelectorAll('#faq-light .faq-question span').forEach(i=>i.textContent='+');
+        if(!open){
+          ans.style.display='block';
+          icon.textContent='–';
+        }
+      });
+    });
+  </script>
+
+</section>
+<!-- ================= End of Mastermind Light Theme Section ================= -->
+
     <footer style="
     background: linear-gradient(
         90deg, 

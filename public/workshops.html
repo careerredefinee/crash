@@ -137,6 +137,377 @@
 
   </div>
 </section>
+<!-- ================= CareerRedefine Workshops Page (Light Theme) ================= -->
+<section id="workshop-light" style="font-family:'Poppins',sans-serif;margin:0;padding:0;">
+
+  <style>
+    /* General Styling */
+    #workshop-light {
+      background:#f9fbff;
+      color:#333;
+    }
+    #workshop-light h2 {
+      color:#007bff;
+      border-left:5px solid #00b4ff;
+      padding-left:10px;
+      margin-bottom:15px;
+      font-size:1.6rem;
+    }
+    #workshop-light p {
+      color:#555;
+      line-height:1.6;
+    }
+
+    /* ===== Section 1: Workshop Overview ===== */
+    #workshop-overview {
+      background:linear-gradient(135deg,#e9f5ff,#ffffff);
+      padding:60px 20px;
+      text-align:left;
+    }
+    #workshop-overview .inner {
+      max-width:1000px;
+      margin:auto;
+    }
+    #workshop-overview .topics {
+      display:flex;
+      flex-wrap:wrap;
+      gap:25px;
+      margin-top:25px;
+    }
+    #workshop-overview .topic {
+      flex:1 1 280px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      padding:20px;
+      transition:transform 0.3s ease;
+    }
+    #workshop-overview .topic:hover {
+      transform:translateY(-5px);
+    }
+    #workshop-overview .icon {
+      font-size:35px;
+      margin-bottom:10px;
+    }
+    #workshop-overview ul {
+      list-style:none;
+      padding-left:0;
+    }
+    #workshop-overview ul li {
+      margin:8px 0;
+      padding-left:25px;
+      position:relative;
+    }
+    #workshop-overview ul li::before {
+      content:"✔";
+      color:#00b4ff;
+      position:absolute;
+      left:0;
+      top:0;
+    }
+
+    /* ===== Section 2: Learning Experience ===== */
+    #workshop-learning {
+      background:linear-gradient(135deg,#ffffff,#f3f9ff);
+      padding:60px 20px;
+    }
+    #workshop-learning .inner {
+      max-width:1000px;
+      margin:auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:30px;
+      align-items:center;
+    }
+    #workshop-learning .text {
+      flex:1 1 480px;
+    }
+    #workshop-learning .icon {
+      font-size:45px;
+      margin-bottom:10px;
+    }
+    #workshop-learning .image {
+      flex:1 1 400px;
+      text-align:center;
+    }
+    #workshop-learning img {
+      width:100%;
+      max-width:450px;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* ===== Section 3: Duration & Structure ===== */
+    #workshop-duration {
+      background:linear-gradient(135deg,#e9f5ff,#ffffff);
+      padding:60px 20px;
+    }
+    #workshop-duration .inner {
+      max-width:1000px;
+      margin:auto;
+      text-align:center;
+    }
+    #workshop-duration .durations {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:25px;
+      margin-top:25px;
+    }
+    #workshop-duration .duration-card {
+      flex:1 1 280px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.05);
+      padding:25px;
+      transition:transform 0.3s ease;
+    }
+    #workshop-duration .duration-card:hover {
+      transform:translateY(-5px);
+    }
+    #workshop-duration .icon {
+      font-size:40px;
+      margin-bottom:10px;
+    }
+    #workshop-duration h3 {
+      color:#007bff;
+      margin-bottom:10px;
+    }
+
+    /* ===== FAQ Section ===== */
+    #workshop-faq {
+      max-width:900px;
+      margin:60px auto;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
+      padding:30px 25px;
+    }
+    #workshop-faq h2 {
+      color:#007bff;
+      border-left:5px solid #00b4ff;
+      padding-left:10px;
+    }
+    #workshop-faq .faq-item {
+      border-bottom:1px solid #eee;
+      padding:12px 0;
+    }
+    #workshop-faq .faq-question {
+      cursor:pointer;
+      font-weight:600;
+      color:#007bff;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      transition:color 0.3s;
+    }
+    #workshop-faq .faq-question:hover { color:#0056b3; }
+    #workshop-faq .faq-answer {
+      display:none;
+      color:#444;
+      padding:10px 0 0 5px;
+      line-height:1.5;
+    }
+
+    @media(max-width:768px){
+      #workshop-overview .topics,
+      #workshop-learning .inner,
+      #workshop-duration .durations { flex-direction:column; align-items:center; }
+      #workshop-overview .topic,
+      #workshop-duration .duration-card { width:90%; }
+    }
+  </style>
+
+  <!-- ===== Section 1: Workshop Overview ===== -->
+  <section id="workshop-overview">
+    <div class="inner">
+      <h2>Hands-on Workshops — Learn by Doing</h2>
+      <p>Our workshops are designed to help professionals and teams master practical skills through live, guided sessions and interactive exercises.</p>
+
+      <div class="topics">
+        <div class="topic">
+          <div class="icon">🧠</div>
+          <h3>Live Interactive Learning</h3>
+          <ul>
+            <li>Real-time mentor guidance</li>
+            <li>Interactive discussions & exercises</li>
+            <li>Collaborative peer learning</li>
+          </ul>
+        </div>
+
+        <div class="topic">
+          <div class="icon">🧩</div>
+          <h3>Practical Application</h3>
+          <ul>
+            <li>Hands-on projects</li>
+            <li>Scenario-based learning</li>
+            <li>Feedback from industry experts</li>
+          </ul>
+        </div>
+
+        <div class="topic">
+          <div class="icon">💬</div>
+          <h3>Community & Growth</h3>
+          <ul>
+            <li>Live Q&A sessions</li>
+            <li>Access to exclusive community</li>
+            <li>Post-workshop resources</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 2: Learning Experience ===== -->
+  <section id="workshop-learning">
+    <div class="inner">
+      <div class="text">
+        <div class="icon">🎯</div>
+        <h2>Engaging, Practical & Real-world Focused</h2>
+        <p>Each workshop is structured to blend expert-led insights with real-world practice — ensuring participants leave with actionable outcomes.</p>
+        <ul>
+          <li>Interactive live sessions for instant feedback</li>
+          <li>Collaborative problem-solving with peers</li>
+          <li>Hands-on challenges and mini-projects</li>
+          <li>Expert-led debriefs and insights</li>
+        </ul>
+      </div>
+      <div class="image">
+        <img src="workshop-session.png" alt="Live Workshop Session">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 3: Duration & Structure ===== -->
+  <section id="workshop-duration">
+    <div class="inner">
+      <h2>Choose Your Ideal Workshop Duration</h2>
+      <p>Flexible durations to match your schedule and goals — from short crash sessions to extended week-long learning experiences.</p>
+
+      <div class="durations">
+        <div class="duration-card">
+          <div class="icon">⏱️</div>
+          <h3>3-Hour Power Session</h3>
+          <p>Quick, focused, and intensive — ideal for mastering one key topic through guided practice.</p>
+        </div>
+
+        <div class="duration-card">
+          <div class="icon">📅</div>
+          <h3>1-Week Deep Dive</h3>
+          <p>A structured, immersive experience with live sessions, projects, and ongoing feedback.</p>
+        </div>
+
+        <div class="duration-card">
+          <div class="icon">🌐</div>
+          <h3>Extended Programs</h3>
+          <p>Comprehensive multi-week workshops designed for long-term transformation and mastery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 4: Workshop FAQ ===== -->
+  <section id="workshop-faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">Are the workshops live or recorded? <span>+</span></div>
+      <div class="faq-answer">All workshops are conducted live with real-time mentor interactions. Recordings are also available for later review.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Do I need prior experience? <span>+</span></div>
+      <div class="faq-answer">Not necessarily! Workshops are designed for all skill levels, with step-by-step guidance throughout.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What’s the ideal duration to choose? <span>+</span></div>
+      <div class="faq-answer">Short 3-hour workshops are great for focused topics. 1-week and extended programs suit deeper skill-building goals.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Are these workshops interactive? <span>+</span></div>
+      <div class="faq-answer">Yes! Expect hands-on exercises, real-time Q&A, group activities, and project collaboration.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Will I get a certificate after the workshop? <span>+</span></div>
+      <div class="faq-answer">Absolutely! You’ll receive a verified CareerRedefine Workshop Certificate upon completion.</div>
+    </div>
+  </section>
+
+  <!-- ===== Inline JS for FAQ Toggle ===== -->
+  <script>
+    document.querySelectorAll('#workshop-faq .faq-question').forEach(q=>{
+      q.addEventListener('click',()=>{
+        const ans=q.nextElementSibling;
+        const icon=q.querySelector('span');
+        const open=ans.style.display==='block';
+        document.querySelectorAll('#workshop-faq .faq-answer').forEach(a=>a.style.display='none');
+        document.querySelectorAll('#workshop-faq .faq-question span').forEach(i=>i.textContent='+');
+        if(!open){
+          ans.style.display='block';
+          icon.textContent='–';
+        }
+      });
+    });
+  </script>
+
+</section>
+<!-- ================= End of Workshops Page Section ================= -->
+ 
+    <footer style="
+    background: linear-gradient(
+        90deg, 
+        rgba(15, 132, 180, 0.9) 0%, 
+        rgba(10, 92, 125, 0.95) 100%
+    ) !important;
+    color: white;
+    padding: 3rem 0;
+    ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5 class="fw-bold mb-3">
+                    <i class="fas fa-rocket me-2"></i>Career Redefine
+                </h5>
+                <p class="mb-3">Transforming careers through innovative learning and professional development.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61564699643555" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/career-redefine/" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/career_redefine.ai/" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h6 class="fw-bold mb-3">Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                    <li><a href="/courses" class="text-white-50 text-decoration-none">Courses</a></li>
+                    <li><a href="/contact" class="text-white-50 text-decoration-none">Contact</a></li>
+                    <li><a href="/about" class="text-white-50 text-decoration-none">About</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <h6 class="fw-bold mb-3">Contact Info</h6>
+                <p class="mb-1"><i class="fas fa-envelope me-2"></i>info@careerredefine.com</p>
+                <p class="mb-1"><i class="fas fa-phone me-2"></i>+91 9535713363</p>
+                <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>22nd Floor, World Trade Center, Unit No 2201A, Rajajinagar, Bengaluru, India</p>
+            </div>
+        </div>
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.3);">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2023 Career Redefine. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+    </footer>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/common.js"></script>
