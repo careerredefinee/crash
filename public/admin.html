@@ -386,6 +386,16 @@
                             <input type="file" class="form-control" id="courseImage" accept="image/*">
                             <small class="form-text text-muted">Recommended 16:9 image.</small>
                         </div>
+                        <div class="col-12">
+                            <label for="courseViewMoreFile" class="form-label"><i class="fas fa-file-code me-1 text-primary"></i>View More Page (Upload .html)</label>
+                            <input type="file" class="form-control" id="courseViewMoreFile" accept=".html,text/html">
+                            <small class="form-text text-muted">Optional. Upload a .html file to be used as the View More page.</small>
+                        </div>
+                        <div class="col-12">
+                            <label for="courseViewMoreHtml" class="form-label"><i class="fas fa-code me-1 text-primary"></i>Or Paste HTML for View More</label>
+                            <textarea class="form-control" id="courseViewMoreHtml" rows="5" placeholder="Paste raw HTML here..."></textarea>
+                            <small class="form-text text-muted">Optional. If both file and HTML are provided, the uploaded file will be used.</small>
+                        </div>
                     </div>
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary btn-lg w-100"><i class="fas fa-plus me-2"></i>Add Crash Course</button>

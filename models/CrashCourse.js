@@ -8,6 +8,8 @@ const crashCourseSchema = new mongoose.Schema({
   duration: { type: String, default: '' }, // e.g., "6 hours" or "2 weeks"
   price: { type: Number, default: 0 },
   strikePrice: { type: Number, default: 0 }, // optional display-only
+  viewMoreHtml: { type: String, default: '' },
+  viewMoreUrl: { type: String, default: '' },
 }, { timestamps: true });
 
 crashCourseSchema.index({ createdAt: -1 });

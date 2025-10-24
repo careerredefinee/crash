@@ -3246,7 +3246,7 @@ app.post('/api/admin/premium/groups', async (req, res) => {
     await group.save();
     res.json({ success: true, group });
   } catch (error) {
-    console.error('Group creation error:', error);
+    console.error('Failed to create group:', error);
     res.status(500).json({ error: 'Failed to create group' });
   }
 });
@@ -3265,29 +3265,71 @@ app.get('/api/crash-courses', async (req, res) => {
   }
 });
 
-// Admin: create crash course (image optional via Cloudinary)
-app.post('/api/admin/crash-courses', upload.single('image'), async (req, res) => {
+// Admin: create crash course (image optional; view-more via pasted HTML or uploaded HTML)
+app.post('/api/admin/crash-courses', uploadMemory.fields([{ name: 'image', maxCount: 1 }, { name: 'viewMoreFile', maxCount: 1 }]), async (req, res) => {
   try {
     if (!req.session.user || !req.session.user.isAdmin) {
       return res.status(403).json({ success: false, error: 'Admin access required' });
     }
-    const { title, description, duration, price, strikePrice } = req.body;
+    const { title, description, duration, price, strikePrice, viewMoreHtml } = req.body;
     if (!title) {
       return res.status(400).json({ success: false, error: 'Title is required' });
     }
+
+    let imageUrl = '';
+    const imageFile = req.files?.image?.[0];
+    if (imageFile && imageFile.buffer) {
+      const imgBase64 = imageFile.buffer.toString('base64');
+      const imgDataUri = `data:${imageFile.mimetype};base64,${imgBase64}`;
+      const imgUpload = await cloudinary.uploader.upload(imgDataUri, { folder: 'career-redefine/crash-courses/images', resource_type: 'image' });
+      imageUrl = imgUpload.secure_url;
+    }
+
+    let viewMoreUrl = '';
+    const vmFile = req.files?.viewMoreFile?.[0];
+    if (vmFile && vmFile.buffer) {
+      const vmBase64 = vmFile.buffer.toString('base64');
+      const vmDataUri = `data:${vmFile.mimetype || 'text/html'};base64,${vmBase64}`;
+      const vmUpload = await cloudinary.uploader.upload(vmDataUri, { folder: 'career-redefine/crash-courses/view-more', resource_type: 'raw' });
+      viewMoreUrl = vmUpload.secure_url;
+    }
+
     const course = new CrashCourse({
       title: title.trim(),
       description: (description || '').trim(),
       duration: (duration || '').trim(),
       price: price ? Number(price) : 0,
       strikePrice: strikePrice ? Number(strikePrice) : 0,
-      image: req.file ? req.file.path : ''
+      image: imageUrl,
+      viewMoreHtml: viewMoreUrl ? '' : (viewMoreHtml || ''),
+      viewMoreUrl: viewMoreUrl || ''
     });
+
     await course.save();
     res.json({ success: true, course });
   } catch (err) {
     console.error('Crash course create error:', err);
     res.status(500).json({ success: false, error: 'Failed to create crash course' });
+  }
+});
+
+// Public: view more page for a specific crash course
+app.get('/crash-courses/:id/view', async (req, res) => {
+  try {
+    const course = await CrashCourse.findById(req.params.id);
+    if (!course) return res.status(404).send('Course not found');
+    if (course.viewMoreUrl) {
+      return res.redirect(course.viewMoreUrl);
+    }
+    const html = course.viewMoreHtml || '';
+    if (!html) return res.status(404).send('View more page not available');
+    const isFullDoc = /<html[\s\S]*?>/i.test(html);
+    if (isFullDoc) return res.send(html);
+    const wrapped = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${course.title} - More</title></head><body>${html}</body></html>`;
+    return res.send(wrapped);
+  } catch (err) {
+    console.error('Crash course view error:', err);
+    res.status(500).send('Failed to render view page');
   }
 });
 

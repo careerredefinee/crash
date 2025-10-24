@@ -41,10 +41,9 @@ function crashCourseCard(c) {
         <p class="card-text text-muted small">${(c.description||'').substring(0,120)}${(c.description||'').length>120?'...':''}</p>
         <div class="mt-auto">
           ${duration ? `<div class="mb-2">${duration}</div>` : ''}
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2">
-              ${strikePrice}${currentPrice}
-            </div>
+          <div class="d-flex align-items-center gap-2">${strikePrice}${currentPrice}</div>
+          <div class="mt-2 d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-secondary btn-sm" href="/crash-courses/${c._id}/view">View More</a>
             <button class="btn btn-primary btn-sm" onclick="openEnroll('${c._id}')">Enroll</button>
           </div>
         </div>

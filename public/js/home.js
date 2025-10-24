@@ -84,10 +84,9 @@ function createCrashCourseCard(c) {
           <p class="card-text text-muted small">${(c.description || '').substring(0,100)}${(c.description||'').length>100?'...':''}</p>
           <div class="mt-auto">
             ${durationHtml ? `<div class="mb-2">${durationHtml}</div>` : ''}
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center gap-2">
-                ${strikePrice}${currentPrice}
-              </div>
+            <div class="d-flex align-items-center gap-2">${strikePrice}${currentPrice}</div>
+            <div class="mt-2 d-flex justify-content-between align-items-center">
+              <a class="btn btn-outline-secondary btn-sm" href="/crash-courses/${c._id}/view">View More</a>
               <button class="btn btn-primary btn-sm" onclick="openCrashEnroll('${c._id}', '${(c.title||'Crash Course').replace(/'/g, "&#39;")}')">Enroll</button>
             </div>
           </div>

@@ -30,6 +30,20 @@ function showAlert(message, type = 'info') {
     }, 5000);
 }
 
+function showLoading(btn) {
+    if (!btn) return '';
+    const original = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing';
+    btn.disabled = true;
+    return original;
+}
+
+function hideLoading(btn, original) {
+    if (!btn) return;
+    btn.innerHTML = original;
+    btn.disabled = false;
+}
+
 // Load workshops
 async function loadWorkshops() {
     try {
@@ -473,6 +487,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // Expose functions globally for inline onclick usage in admin.html
 window.showAddWorkshopModal = showAddWorkshopModal;
+window.showAddCourseModal = showAddCourseModal;
 window.handleAddWorkshop = handleAddWorkshop;
 window.startEditWorkshop = startEditWorkshop;
 window.handleEditWorkshop = handleEditWorkshop;
@@ -2629,6 +2644,11 @@ function showAddBlogModal() {
     modal.show();
 }
 
+function showAddCourseModal() {
+    const modal = new bootstrap.Modal(document.getElementById('addCourseModal'));
+    modal.show();
+}
+
 // Form handlers
 async function handleAddCourse(e) {
     e.preventDefault();
@@ -2643,6 +2663,14 @@ async function handleAddCourse(e) {
     const imageFile = document.getElementById('courseImage').files[0];
     if (imageFile) {
         formData.append('image', imageFile);
+    }
+    const vmFile = document.getElementById('courseViewMoreFile')?.files?.[0];
+    if (vmFile) {
+        formData.append('viewMoreFile', vmFile);
+    }
+    const vmHtml = document.getElementById('courseViewMoreHtml')?.value;
+    if (vmHtml) {
+        formData.append('viewMoreHtml', vmHtml);
     }
     
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -3202,7 +3230,8 @@ document.head.appendChild(style);
 async function loadReminders() {
     try {
         const res = await fetch('/api/admin/reminders');
-        const reminders = await res.json();
+        const payload = await res.json();
+        const reminders = (payload && payload.reminders) || [];
 
         const tbody = document.getElementById('remindersTableBody');
         tbody.innerHTML = '';
@@ -3315,6 +3344,29 @@ async function deleteReminder(id) {
         console.error('Error deleting reminder:', err);
         showAlert('Network error. Please try again.', 'danger');
     }
+}
+
+function editReminderLink(id, currentLink) {
+    const newLink = prompt('Enter meeting link (leave empty to clear):', currentLink || '');
+    if (newLink === null) return;
+    fetch(`/api/admin/reminders/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meetingLink: String(newLink).trim() })
+    })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+        if (ok && data.success !== false) {
+            showAlert('Reminder link updated', 'success');
+            loadReminders();
+        } else {
+            showAlert((data && data.error) || 'Failed to update link', 'danger');
+        }
+    })
+    .catch(err => {
+        console.error('Error updating reminder link:', err);
+        showAlert('Network error. Please try again.', 'danger');
+    });
 }
 
 // Add event listener for reminders tab
