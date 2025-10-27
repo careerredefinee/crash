@@ -109,36 +109,107 @@ html {
     </nav>
 
     <!-- Homepage Hero Section -->
-<section id="hero-section" style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 100px 20px; text-align: center; position: relative; overflow: hidden;">
+<section id="hero-section" style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 60px 20px; position: relative; overflow: hidden;">
   <!-- Decorative circles -->
   <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
   <div style="position: absolute; bottom: -60px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
 
-  <!-- Main Heading -->
-  <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Learn, Grow & Succeed</h1>
-  <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 50px;">
-    Explore our expert-led Crash Courses to boost your skills fast, or join interactive Workshops to gain hands-on experience. 
-    Whatever your learning style, we’ve got the right path for you.
-  </p>
-
-  <!-- Buttons for both sections -->
-  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-    <a id="crash-courses-btn" href="/courses" style="padding: 15px 35px; font-size: 1.1rem; background: #ff512f; color: white; text-decoration: none; border-radius: 50px; transition: 0.3s;">
-      Explore Crash Courses
-    </a>
-    <a id="workshops-btn" href="/workshops" style="padding: 15px 35px; font-size: 1.1rem; background: #ffd700; color: #333; text-decoration: none; border-radius: 50px; transition: 0.3s;">
-      Explore Workshops
-    </a>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="hero-badge mb-3 d-inline-flex align-items-center px-3 py-2 rounded-pill">
+          <i class="fa-solid fa-award me-2"></i>
+          <span>India's #1 Career Platform</span>
+          <span class="ms-2 text-warning"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+        </div>
+        <h1 id="heroTitle" class="hero-title fw-bold" style="font-size: 3rem; margin-bottom: 10px;">
+          Learn, Grow &amp; Succeed
+        </h1>
+        <p id="heroSubtitle" class="hero-subtitle" style="font-size: 1.05rem; opacity: .95; max-width: 700px; margin-bottom: 16px;">
+          Explore our expert-led Crash Courses to boost your skills fast, or join interactive Workshops to gain hands-on experience.
+        </p>
+        <ul id="heroBullets" class="list-unstyled d-flex flex-wrap gap-2 mb-4">
+          <li class="hero-chip">5000+ Learners</li>
+          <li class="hero-chip">95% Success Rate</li>
+        </ul>
+        <div class="d-flex gap-3 flex-wrap">
+          <a id="crash-courses-btn" href="/courses" class="btn-pill" style="padding: 14px 28px; font-size: 1.05rem; background: #ff512f; color: white; text-decoration: none; border-radius: 50px;">
+            Start Your Journey
+          </a>
+          <a id="workshops-btn" href="/workshops" class="btn-pill" style="padding: 14px 28px; font-size: 1.05rem; background: #ffd700; color: #333; text-decoration: none; border-radius: 50px;">
+            Book a Session
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000" data-bs-pause="false">
+          <div class="carousel-inner rounded-3 shadow carousel-frame">
+            <div class="carousel-item active" data-title="Master the Future of <span class='text-warning'>Data Science &amp; AI</span>" data-subtitle="Learn from industry experts and work on real-world projects that prepare you for tomorrow's opportunities." data-bullets="5000+ Learners|95% Success Rate">
+              <img src="/images/hero1.png" class="d-block w-100" alt="Crash course learning" style="object-fit: contain; height: 420px; background:#ffffff;">
+            </div>
+            <div class="carousel-item" data-title="Become a <span class='text-warning'>Full‑Stack Developer</span>" data-subtitle="Build production-ready apps with React, Node.js and Cloud, guided by mentors." data-bullets="Live Mentor Support|Hands-on Projects">
+              <img src="/images/hero2.png" class="d-block w-100" alt="Interactive workshops" style="object-fit: contain; height: 420px; background:#ffffff;">
+            </div>
+            <div class="carousel-item" data-title="Crack Your <span class='text-warning'>Dream Job</span>" data-subtitle="Resume, interview prep and portfolio building to launch your tech career." data-bullets="Mock Interviews|Placement Assistance">
+              <img src="/images/hero3.png" class="d-block w-100" alt="Career growth" style="object-fit: contain; height: 420px; background:#ffffff;">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 </section>
 
+<script>
+  (function(){
+    function setHeroContent(item){
+      if(!item) return;
+      var titleEl = document.getElementById('heroTitle');
+      var subtitleEl = document.getElementById('heroSubtitle');
+      var bulletsEl = document.getElementById('heroBullets');
+      if(titleEl && item.dataset.title){ titleEl.innerHTML = item.dataset.title; }
+      if(subtitleEl && item.dataset.subtitle){ subtitleEl.textContent = item.dataset.subtitle; }
+      if(bulletsEl){
+        bulletsEl.innerHTML = '';
+        var parts = (item.dataset.bullets || '').split('|').filter(Boolean);
+        parts.forEach(function(p){
+          var li = document.createElement('li');
+          li.className = 'hero-chip';
+          li.textContent = p.trim();
+          bulletsEl.appendChild(li);
+        });
+      }
+    }
+    var carouselEl = document.getElementById('heroCarousel');
+    if(carouselEl){
+      setHeroContent(carouselEl.querySelector('.carousel-item.active'));
+      carouselEl.addEventListener('slid.bs.carousel', function(e){ setHeroContent(e.relatedTarget); });
+    }
+  })();
+  </script>
+
 
 <!-- TRUST & ACCURACY SECTION -->
-<section id="whySection" class="py-5" style="background:#f8f9fa;">
+<section id="whySection" class="section-wrap">
   <div class="container">
+    <div class="section-card p-4 p-md-5">
     <div class="row text-center mb-4">
-      <h2 class="fw-bold">Why Career Redefine?</h2>
-      <p class="text-muted">Trusted guidance, accurate roadmaps, and real outcomes.</p>
+      <h2 class="section-title">Why Career Redefine?</h2>
+      <p class="section-subtitle">Trusted guidance, accurate roadmaps, and real outcomes.</p>
     </div>
     <div class="row g-4">
       <div class="col-md-4">
@@ -167,8 +238,9 @@ html {
 </section>
 
 <!-- RECENT WORKSHOPS -->
-<section id="recentWorkshopSection" class="py-5">
+<section id="recentWorkshopSection" class="section-wrap compact">
   <div class="container">
+    <div class="section-card p-3 p-md-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h3 class="fw-bold mb-0">Upcoming Workshops</h3>
      <a href="/workshops" style="text-decoration: none; display: inline-block; padding: 10px 25px; background-color: #61b7f0; color: white; border-radius: 50px; font-weight: 600; transition: 0.3s; border: none;">
@@ -179,12 +251,14 @@ html {
     <div class="row" id="recentWorkshops">
       <!-- Rendered by js/home.js -->
     </div>
+    </div>
   </div>
 </section>
 
 <!-- RECENT CRASH COURSES -->
-<section id="recentCrashSection" class="py-5">
+<section id="recentCrashSection" class="section-wrap compact">
   <div class="container">
+    <div class="section-card p-3 p-md-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h3 class="fw-bold mb-0">Recent Crash Courses</h3>
       <a href="/courses" style="text-decoration: none; display: inline-block; padding: 10px 25px; background-color: #61b7f0; color: white; border-radius: 50px; font-weight: 600; transition: 0.3s; border: none;">
@@ -193,6 +267,7 @@ html {
     </div>
     <div class="row" id="recentCrashCourses">
       <!-- Rendered by js/home.js -->
+    </div>
     </div>
   </div>
   
@@ -309,9 +384,11 @@ html {
 
 <!-- Filename: what-you-will-learn.html  
 Purpose: Professional responsive 'What You Will Learn' section using inline CSS and cards with icons -->
-<section id="what-you-will-learn" style="font-family:Arial, Helvetica, sans-serif; padding:40px 20px; background:linear-gradient(180deg,#ffffff,#f8faff); text-align:center;">
-  <h2 style="font-size:30px; color:#0b2545; margin-bottom:10px;">What You Will Learn</h2>
-  <p style="font-size:15px; color:#555; max-width:700px; margin:0 auto 35px; line-height:1.6;">
+<section id="what-you-will-learn" class="section-wrap">
+  <div class="container">
+    <div class="section-card p-4 p-md-5 text-center">
+  <h2 class="section-title">What You Will Learn</h2>
+  <p class="section-subtitle">
     Our crash courses cover all major domains like programming, data analytics, AI, HR, and more. Gain essential job-ready skills through interactive, hands-on lessons and become a pro in record time.
   </p>
 
@@ -367,22 +444,26 @@ Purpose: Professional responsive 'What You Will Learn' section using inline CSS 
 
   <script type="text/javascript">
     // Simple hover animation using inline JS
-    var cards = document.querySelectorAll('#learn-grid > div');
-    cards.forEach(function(card){
+    var learnCards = document.querySelectorAll('#learn-grid > div');
+    learnCards.forEach(function(card){
       card.addEventListener('mouseenter', function(){card.style.transform='translateY(-5px)';});
       card.addEventListener('mouseleave', function(){card.style.transform='translateY(0)';});
     });
   </script>
+    </div>
+  </div>
 </section>
 <!-- Filename: crash-courses-and-workshops.html  
 Purpose: Modern professional section like HR example, but unique style and color scheme -->
-<section id="crash-courses-workshops" style="font-family:'Poppins', sans-serif; background:linear-gradient(180deg,#f3f8ff,#eaf2ff); padding:60px 20px; text-align:center; border-radius:20px;">
-  <h2 style="font-size:32px; color:#1a2b6d; font-weight:700; margin-bottom:15px;">Crash Courses & Workshops</h2>
-  <p style="color:#555; font-size:15px; max-width:800px; margin:0 auto 40px; line-height:1.6;">
+<section id="crash-courses-workshops" class="section-wrap">
+  <div class="container">
+    <div class="section-card p-4 p-md-5 text-center">
+  <h2 class="section-title">Crash Courses & Workshops</h2>
+  <p class="section-subtitle">
     Accelerate your learning through interactive crash courses and workshops designed to enhance your skills, creativity, and problem-solving ability. Learn smarter, collaborate better, and achieve professional growth faster.
   </p>
 
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:25px; max-width:1150px; margin:0 auto;">
+  <div id="ccw-cards" style="display:flex; flex-wrap:wrap; justify-content:center; gap:25px; max-width:1150px; margin:0 auto;">
 
     <!-- Block 1 -->
     <div style="flex:1 1 300px; min-width:270px; background:#ffffff; border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.06); padding:30px 20px; transition:transform 0.3s;">
@@ -434,16 +515,20 @@ Purpose: Modern professional section like HR example, but unique style and color
 
   <script type="text/javascript">
     // Hover effect
-    document.querySelectorAll('#crash-courses-workshops > div > div').forEach(function(card){
+    document.querySelectorAll('#ccw-cards > div').forEach(function(card){
       card.addEventListener('mouseenter',function(){card.style.transform='translateY(-6px) scale(1.02)';});
       card.addEventListener('mouseleave',function(){card.style.transform='translateY(0) scale(1)';});
     });
   </script>
+    </div>
+  </div>
 </section>
 <!-- About Section (Redesigned Unique Version) -->
-<section id="about-courses-workshops" style="background: linear-gradient(135deg, #fffaf5, #f2f6ff); padding: 70px 0; text-align: center; font-family: 'Poppins', sans-serif;">
-  <h2 style="color: #2b2b2b; font-size: 34px; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px;">About Career Redefine</h2>
-  <p style="max-width: 820px; margin: 0 auto 50px auto; color: #444; font-size: 17px; line-height: 1.6;">
+<section id="about-courses-workshops" class="section-wrap">
+  <div class="container">
+    <div class="section-card p-4 p-md-5 text-center">
+  <h2 class="section-title">About Career Redefine</h2>
+  <p class="section-subtitle">
     We empower learners and professionals to accelerate their careers through <strong>immersive programs</strong>,
     <strong>real-time projects</strong>, and <strong>industry mentorship</strong> that make them stand out in today’s evolving world.
   </p>
@@ -482,12 +567,14 @@ Purpose: Modern professional section like HR example, but unique style and color
   </div>
 
   <script>
-    const cards = document.querySelectorAll('section div[style*="box-shadow"]');
-    cards.forEach(card => {
+    const aboutCards = document.querySelectorAll('section div[style*="box-shadow"]');
+    aboutCards.forEach(card => {
       card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-8px) scale(1.02)');
       card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0) scale(1)');
     });
   </script>
+    </div>
+  </div>
 </section>
 
     <footer style="

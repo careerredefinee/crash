@@ -1156,6 +1156,36 @@ footer {
   box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
 
+.section-wrap {
+  padding: 50px 0;
+}
+
+.section-wrap.compact {
+  padding: 8px 0;
+}
+
+.section-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(13,71,161,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.section-title {
+  color: #1a2b6d;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+}
+
+.section-subtitle {
+  color: #555;
+  font-size: 1rem;
+  max-width: 820px;
+  margin: 0 auto 24px auto;
+  line-height: 1.6;
+}
+
 /* Tools */
 .tool-card {
   background: white;

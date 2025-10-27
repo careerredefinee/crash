@@ -563,3 +563,63 @@ footer::before {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+/* ===== Homepage hero enhancements ===== */
+.hero-badge {
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.hero-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+}
+.btn-pill {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(0,0,0,0.18);
+}
+
+/* Carousel frame with non-cropping images */
+.carousel-frame {
+    height: 420px;
+    padding: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+}
+.carousel-frame .carousel-item {
+    height: 100%;
+}
+.carousel-frame .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain; /* show full image, no crop */
+    background: #ffffff;
+}
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.6);
+}
+.carousel-indicators .active {
+    background-color: #ffd700;
+}
+
+@media (max-width: 992px) {
+    .carousel-frame { height: 340px; }
+}
+@media (max-width: 576px) {
+    .carousel-frame { height: 240px; }
+    .hero-title { font-size: 2.2rem !important; }
+}
