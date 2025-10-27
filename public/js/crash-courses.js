@@ -34,7 +34,7 @@ function crashCourseCard(c) {
   
   return `
   <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-    <div class="card h-100 shadow-sm">
+    <div class="card h-100 course3d-card js-tilt">
       ${img}
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">${c.title || 'Crash Course'}</h5>

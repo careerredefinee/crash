@@ -61,18 +61,18 @@
     </div>
 </nav>
 <!-- Crash Courses Hero Section -->
-<section style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 100px 20px; text-align: center; position: relative; overflow: hidden;">
+<section class="course3d-hero text-center">
   <!-- Decorative circles -->
   <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
   <div style="position: absolute; bottom: -60px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
 
   <!-- Content -->
-  <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Master New Skills with Our Crash Courses</h1>
-  <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px;">
+  <h1 class="hero-title">Master New Skills with Our Crash Courses</h1>
+  <p class="hero-subtitle">
     Dive into intensive, expertly designed crash courses that help you learn fast, gain practical knowledge, 
     and boost your career potential in record time.
   </p>
-  <a href="#crash-courses" style="padding: 15px 35px; font-size: 1.1rem; background: #ffd700; color: #333; text-decoration: none; border-radius: 50px; transition: 0.3s;">
+  <a href="#crash-courses" class="course3d-btn">
     Explore Crash Courses
   </a>
 </section>
@@ -119,13 +119,15 @@ Header Section -->
   </div>`
 }
 -->
-    <section class="py-5">
+    <section class="section-wrap">
         <div class="container">
+            <div class="section-card p-3 p-md-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3 class="fw-bold mb-0">All Crash Courses</h3>
             </div>
-            <div class="row" id="crashCoursesAll">
+            <div class="row course3d-grid" id="crashCoursesAll">
                 <!-- Crash courses will be loaded here -->
+            </div>
             </div>
         </div>
     </section>
@@ -142,7 +144,7 @@ Header Section -->
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; max-width: 1150px; margin: 0 auto;">
 
     <!-- Fast Learning Block -->
-    <div style="background: #6c63ff; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+    <div class="course3d-card js-tilt" style="background: #6c63ff; color: white; border-radius: 18px; width: 260px; padding: 40px 25px;">
       <div style="font-size: 40px; margin-bottom: 18px;">⚡</div>
       <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Intensive Learning</h3>
       <p style="font-size: 15px; line-height: 1.6;">
@@ -151,7 +153,7 @@ Header Section -->
     </div>
 
     <!-- Mentorship Block -->
-    <div style="background: #ff6b81; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+    <div class="course3d-card js-tilt" style="background: #ff6b81; color: white; border-radius: 18px; width: 260px; padding: 40px 25px;">
       <div style="font-size: 40px; margin-bottom: 18px;">🎓</div>
       <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Expert Mentorship</h3>
       <p style="font-size: 15px; line-height: 1.6;">
@@ -160,7 +162,7 @@ Header Section -->
     </div>
 
    <!-- Expert-Led Learning Block -->
-<div style="background: #00b894; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+<div class="course3d-card js-tilt" style="background: #00b894; color: white; border-radius: 18px; width: 260px; padding: 40px 25px;">
   <div style="font-size: 40px; margin-bottom: 18px;">🧠</div>
   <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Expert-Led Learning</h3>
   <p style="font-size: 15px; line-height: 1.6;">
@@ -169,7 +171,7 @@ Header Section -->
 </div>
 
 <!-- Comprehensive Curriculum Block -->
-<div style="background: #f8b400; color: white; border-radius: 18px; width: 260px; padding: 40px 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;">
+<div class="course3d-card js-tilt" style="background: #f8b400; color: white; border-radius: 18px; width: 260px; padding: 40px 25px;">
   <div style="font-size: 40px; margin-bottom: 18px;">📘</div>
   <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 12px;">Comprehensive Curriculum</h3>
   <p style="font-size: 15px; line-height: 1.6;">
@@ -180,7 +182,7 @@ Header Section -->
   </div>
 
   <script>
-    const boxes = document.querySelectorAll('section div[style*="box-shadow"]');
+    const boxes = document.querySelectorAll('section div[style*="box-shadow"]:not(.js-tilt)');
     boxes.forEach(b => {
       b.addEventListener('mouseenter', () => {
         b.style.transform = 'translateY(-10px) scale(1.03)';
@@ -334,7 +336,7 @@ Header Section -->
       <p>Whether you're starting your journey, leading teams, or driving innovation — this mastermind empowers you to develop critical universal skills for success.</p>
 
       <div class="topics">
-        <div class="topic">
+        <div class="topic course3d-card js-tilt">
           <div class="icon">📘</div>
           <h3>Strategic & Leadership Skills</h3>
           <ul>
@@ -344,7 +346,7 @@ Header Section -->
           </ul>
         </div>
 
-        <div class="topic">
+        <div class="topic course3d-card js-tilt">
           <div class="icon">💡</div>
           <h3>Personal & Professional Growth</h3>
           <ul>
@@ -354,7 +356,7 @@ Header Section -->
           </ul>
         </div>
 
-        <div class="topic">
+        <div class="topic course3d-card js-tilt">
           <div class="icon">🚀</div>
           <h3>Upskill Your Team</h3>
           <ul>
@@ -374,7 +376,7 @@ Header Section -->
       <div class="icon" style="font-size:45px;">🎓</div>
       <h2>CareerRedefine Certificate</h2>
       <p><strong>Yes!</strong> Upon completion of this mastermind program, you'll earn a <strong>CareerRedefine Certificate</strong> — a trusted symbol of your commitment to professional growth and lifelong learning.</p>
-      <img src="/images/certificate.png" alt="CareerRedefine Certificate">
+      <img class="course3d-image js-tilt" src="/images/certificate.png" alt="CareerRedefine Certificate">
     </div>
   </section>
 
@@ -382,27 +384,27 @@ Header Section -->
   <section id="faq-light">
     <h2>Frequently Asked Questions</h2>
 
-    <div class="faq-item">
+    <div class="faq-item js-tilt">
       <div class="faq-question">Who can join this program? <span>+</span></div>
       <div class="faq-answer">Anyone eager to elevate their skills — whether you're an entrepreneur, manager, or specialist looking to grow.</div>
     </div>
 
-    <div class="faq-item">
+    <div class="faq-item js-tilt">
       <div class="faq-question">Do I need prior experience? <span>+</span></div>
       <div class="faq-answer">No, this program welcomes all levels. The curriculum adapts to your goals and learning pace.</div>
     </div>
 
-    <div class="faq-item">
+    <div class="faq-item js-tilt">
       <div class="faq-question">Is this program self-paced? <span>+</span></div>
       <div class="faq-answer">Yes. Learn at your own pace with access to recorded content and optional mentor sessions.</div>
     </div>
 
-    <div class="faq-item">
+    <div class="faq-item js-tilt">
       <div class="faq-question">Will I get lifetime access? <span>+</span></div>
       <div class="faq-answer">Absolutely. Once enrolled, you’ll have lifetime access to all updates and resources.</div>
     </div>
 
-    <div class="faq-item">
+    <div class="faq-item js-tilt">
       <div class="faq-question">Do I get a certificate? <span>+</span></div>
       <div class="faq-answer">Yes! You’ll receive a verified CareerRedefine Certificate to showcase your achievement.</div>
     </div>
@@ -545,6 +547,40 @@ Header Section -->
           document.addEventListener('DOMContentLoaded', showProfileNav);
         }
       }
+    </script>
+    <script>
+      (function(){
+        function attachTilt(el){
+          if(!el || el.dataset.tiltAttached) return;
+          el.dataset.tiltAttached = '1';
+          const max = 10;
+          function onMove(e){
+            const r = el.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            const rx = (-py * max).toFixed(2);
+            const ry = (px * max).toFixed(2);
+            el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          }
+          function onLeave(){
+            el.style.transform = '';
+          }
+          el.addEventListener('mousemove', onMove);
+          el.addEventListener('mouseleave', onLeave);
+        }
+        function initTilt(){
+          document.querySelectorAll('.js-tilt').forEach(attachTilt);
+        }
+        if(document.readyState !== 'loading') initTilt();
+        else document.addEventListener('DOMContentLoaded', initTilt);
+        const grid = document.getElementById('crashCoursesAll');
+        if (grid) {
+          const obs = new MutationObserver(() => {
+            document.querySelectorAll('.js-tilt').forEach(attachTilt);
+          });
+          obs.observe(grid, { childList: true, subtree: true });
+        }
+      })();
     </script>
     <!-- AI Assistant Chat -->
   <!-- AI Assistant Chat 

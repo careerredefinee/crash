@@ -60,47 +60,51 @@
         </div>
     </nav>
     <!-- Workshop Hero Section -->
-<section style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; padding: 100px 20px; text-align: center; position: relative; overflow: hidden;">
+<section class="course3d-hero text-center">
   <!-- Decorative circles -->
   <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
   <div style="position: absolute; bottom: -60px; right: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
 
   <!-- Content -->
-  <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Elevate Your Skills with Our Workshops</h1>
-  <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px;">
+  <h1 class="hero-title">Elevate Your Skills with Our Workshops</h1>
+  <p class="hero-subtitle">
     Join hands-on workshops designed to enhance your expertise, connect with industry experts, 
     and unlock new opportunities in your career journey.
   </p>
-  <a href="#workshops" style="padding: 15px 35px; font-size: 1.1rem; background: #ff6b6b; color: white; text-decoration: none; border-radius: 50px; transition: 0.3s;">
+  <a href="#workshops" class="course3d-btn">
     Explore Workshops
   </a>
 </section>
 
 
   <main style="padding-top: 2px;">
-    <section class="py-5 bg-light">
+    <section class="section-wrap">
       <div class="container">
+        <div class="section-card p-3 p-md-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h3 class="fw-bold mb-0">All Workshops</h3>
         </div>
-        <div class="row" id="workshopsAll">
+        <div class="row course3d-grid" id="workshopsAll">
           <!-- Workshops will be loaded here -->
+        </div>
         </div>
       </div>
     </section>
   </main>
-<section style="padding:20px 20px; background:#f9fbff; text-align:center;">
-  <h2 style="font-size:32px; font-weight:700; margin-bottom:10px; color:#111;">
+<section class="section-wrap">
+  <div class="container">
+    <div class="section-card p-4 p-md-5 text-center">
+  <h2 class="section-title">
     Enhance Your Expertise with Our Workshops
   </h2>
-  <p style="font-size:17px; color:#555; margin-bottom:50px;">
+  <p class="section-subtitle">
     Hands-on sessions designed to strengthen your skills through practical experience and collaboration.
   </p>
 
   <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:25px;">
 
     <!-- Workshop Block 1 -->
-    <div style="background:#6c63ff; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+    <div class="course3d-card js-tilt" style="background:#6c63ff; color:white; border-radius:18px; width:260px; padding:40px 25px;">
       <div style="font-size:40px; margin-bottom:18px;">🧰</div>
       <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Practical Skill Training</h3>
       <p style="font-size:15px; line-height:1.6;">
@@ -109,7 +113,7 @@
     </div>
 
     <!-- Workshop Block 2 -->
-    <div style="background:#ff6b6b; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+    <div class="course3d-card js-tilt" style="background:#ff6b6b; color:white; border-radius:18px; width:260px; padding:40px 25px;">
       <div style="font-size:40px; margin-bottom:18px;">🤝</div>
       <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Collaborative Learning</h3>
       <p style="font-size:15px; line-height:1.6;">
@@ -118,7 +122,7 @@
     </div>
 
     <!-- Workshop Block 3 -->
-    <div style="background:#00b894; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+    <div class="course3d-card js-tilt" style="background:#00b894; color:white; border-radius:18px; width:260px; padding:40px 25px;">
       <div style="font-size:40px; margin-bottom:18px;">💡</div>
       <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Innovation Sessions</h3>
       <p style="font-size:15px; line-height:1.6;">
@@ -127,7 +131,7 @@
     </div>
 
     <!-- Workshop Block 4 -->
-    <div style="background:#f8b400; color:white; border-radius:18px; width:260px; padding:40px 25px; box-shadow:0 10px 25px rgba(0,0,0,0.1); transition:0.3s;">
+    <div class="course3d-card js-tilt" style="background:#f8b400; color:white; border-radius:18px; width:260px; padding:40px 25px;">
       <div style="font-size:40px; margin-bottom:18px;">🎯</div>
       <h3 style="font-size:20px; font-weight:600; margin-bottom:12px;">Outcome-Focused Results</h3>
       <p style="font-size:15px; line-height:1.6;">
@@ -135,6 +139,8 @@
       </p>
     </div>
 
+  </div>
+    </div>
   </div>
 </section>
 <!-- ================= CareerRedefine Workshops Page (Light Theme) ================= -->
@@ -373,7 +379,7 @@
         </ul>
       </div>
       <div class="image">
-        <img src="workshop-session.png" alt="Live Workshop Session">
+        <img class="course3d-image js-tilt" src="images/workshop-session.png" alt="Live Workshop Session">
       </div>
     </div>
   </section>
@@ -385,19 +391,19 @@
       <p>Flexible durations to match your schedule and goals — from short crash sessions to extended week-long learning experiences.</p>
 
       <div class="durations">
-        <div class="duration-card">
+        <div class="duration-card course3d-card js-tilt">
           <div class="icon">⏱️</div>
           <h3>3-Hour Power Session</h3>
           <p>Quick, focused, and intensive — ideal for mastering one key topic through guided practice.</p>
         </div>
 
-        <div class="duration-card">
+        <div class="duration-card course3d-card js-tilt">
           <div class="icon">📅</div>
           <h3>1-Week Deep Dive</h3>
           <p>A structured, immersive experience with live sessions, projects, and ongoing feedback.</p>
         </div>
 
-        <div class="duration-card">
+        <div class="duration-card course3d-card js-tilt">
           <div class="icon">🌐</div>
           <h3>Extended Programs</h3>
           <p>Comprehensive multi-week workshops designed for long-term transformation and mastery.</p>
@@ -512,5 +518,35 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/workshops.js"></script>
+  <script>
+    (function(){
+      function attachTilt(el){
+        if(!el || el.dataset.tiltAttached) return;
+        el.dataset.tiltAttached = '1';
+        const max = 10;
+        function onMove(e){
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          const rx = (-py * max).toFixed(2);
+          const ry = (px * max).toFixed(2);
+          el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+        }
+        function onLeave(){ el.style.transform = ''; }
+        el.addEventListener('mousemove', onMove);
+        el.addEventListener('mouseleave', onLeave);
+      }
+      function initTilt(){ document.querySelectorAll('.js-tilt').forEach(attachTilt); }
+      if(document.readyState !== 'loading') initTilt();
+      else document.addEventListener('DOMContentLoaded', initTilt);
+      const grid = document.getElementById('workshopsAll');
+      if (grid) {
+        const obs = new MutationObserver(() => {
+          document.querySelectorAll('.js-tilt').forEach(attachTilt);
+        });
+        obs.observe(grid, { childList: true, subtree: true });
+      }
+    })();
+  </script>
 </body>
 </html>

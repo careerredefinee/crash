@@ -61,18 +61,19 @@
     </nav>
 
   <main style="padding-top: 0; margin-top: 0;">
-    <section class="py-5" style="background: linear-gradient(90deg, rgba(15, 132, 180, 0.9) 0%, rgba(10, 92, 125, 0.95) 100%); color: white; padding-top: 80px !important;">
-      <div class="container text-center">
-        <h1 class="display-6 fw-bold mb-2">Contact Us</h1>
-        <p class="lead mb-0">We'd love to hear from you</p>
+    <section class="course3d-hero text-center">
+      <div class="container">
+        <h1 class="hero-title">Contact Us</h1>
+        <p class="hero-subtitle">We'd love to hear from you</p>
       </div>
     </section>
 
-    <section class="py-5">
+    <section class="section-wrap">
       <div class="container">
+        <div class="section-card p-3 p-md-4">
         <div class="row g-4">
           <div class="col-lg-7">
-            <div class="card shadow-sm">
+            <div class="card course3d-card js-tilt">
               <div class="card-body">
                 <h4 class="mb-3">Send us a message</h4>
                 <form id="contactForm">
@@ -107,7 +108,7 @@
             </div>
           </div>
           <div class="col-lg-5">
-            <div class="card shadow-sm h-100">
+            <div class="card course3d-card js-tilt h-100">
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
                 <h4 class="mb-3">Connect</h4>
                 <div class="d-flex gap-3">
@@ -127,6 +128,7 @@
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -219,5 +221,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/contact.js"></script>
+  <script>
+    (function(){
+      function attachTilt(el){
+        if(!el || el.dataset.tiltAttached) return;
+        el.dataset.tiltAttached = '1';
+        const max = 10;
+        function onMove(e){
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          const rx = (-py * max).toFixed(2);
+          const ry = (px * max).toFixed(2);
+          el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+        }
+        function onLeave(){ el.style.transform = ''; }
+        el.addEventListener('mousemove', onMove);
+        el.addEventListener('mouseleave', onLeave);
+      }
+      function initTilt(){ document.querySelectorAll('.js-tilt').forEach(attachTilt); }
+      if(document.readyState !== 'loading') initTilt();
+      else document.addEventListener('DOMContentLoaded', initTilt);
+    })();
+  </script>
 </body>
 </html>
