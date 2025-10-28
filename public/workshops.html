@@ -213,35 +213,44 @@
     }
 
     /* ===== Section 2: Learning Experience ===== */
-    #workshop-learning {
-      background:linear-gradient(135deg,#ffffff,#f3f9ff);
-      padding:60px 20px;
-    }
-    #workshop-learning .inner {
-      max-width:1000px;
-      margin:auto;
-      display:flex;
-      flex-wrap:wrap;
-      gap:30px;
-      align-items:center;
-    }
-    #workshop-learning .text {
-      flex:1 1 480px;
-    }
-    #workshop-learning .icon {
-      font-size:45px;
-      margin-bottom:10px;
-    }
-    #workshop-learning .image {
-      flex:1 1 400px;
-      text-align:center;
-    }
-    #workshop-learning img {
-      width:100%;
-      max-width:450px;
-      border-radius:10px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.1);
-    }
+#workshop-learning {
+  background: linear-gradient(135deg, #ffffff, #f3f9ff);
+  padding: 60px 20px;
+}
+
+#workshop-learning .inner {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: center;
+  flex-direction: row; /* Ensures image comes first (left), then text */
+}
+
+#workshop-learning .image {
+  flex: 1 1 400px;
+  text-align: center;
+  order: 1; /* Image first */
+}
+
+#workshop-learning .text {
+  flex: 1 1 480px;
+  order: 2; /* Text second */
+}
+
+#workshop-learning .icon {
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+#workshop-learning img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
 
     /* ===== Section 3: Duration & Structure ===== */
     #workshop-duration {
@@ -328,37 +337,23 @@
   <section id="workshop-overview">
     <div class="inner">
       <h2>Hands-on Workshops — Learn by Doing</h2>
-      <p>Our workshops are designed to help professionals and teams master practical skills through live, guided sessions and interactive exercises.</p>
+      <p>Master practical skills through live, mentor-led sessions and real projects. Each workshop blends guidance, collaboration, and structured practice so you leave with confidence and outcomes you can showcase.</p>
 
-      <div class="topics">
-        <div class="topic">
-          <div class="icon"><i class="fa-solid fa-brain" style="color:#0b66ff;"></i></div>
-          <h3>Live Interactive Learning</h3>
-          <ul>
-            <li>Real-time mentor guidance</li>
-            <li>Interactive discussions & exercises</li>
-            <li>Collaborative peer learning</li>
+      <div class="overview-hero" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:28px; max-width:1000px; margin:auto;">
+        <div style="flex:1 1 460px; min-width:300px;">
+          <h3 style="font-size:22px; color:#0b2545; margin:0 0 10px 0; font-weight:700;">A focused, hands-on learning experience</h3>
+          <p style="font-size:15px; color:#475569; line-height:1.8; margin:0 0 12px 0;">
+            Learn by doing with real-time feedback, collaborative breakouts, and ready-to-use frameworks you can apply immediately at work.
+          </p>
+          <ul style="padding-left:18px; margin:0; color:#334155; font-size:14px;">
+            <li>Live mentor support and Q&A</li>
+            <li>Practical challenges and mini projects</li>
+            <li>Peer collaboration and review</li>
+            <li>Actionable templates and playbooks</li>
           </ul>
         </div>
-
-        <div class="topic">
-          <div class="icon"><i class="fa-solid fa-puzzle-piece" style="color:#ff6b6b;"></i></div>
-          <h3>Practical Application</h3>
-          <ul>
-            <li>Hands-on projects</li>
-            <li>Scenario-based learning</li>
-            <li>Feedback from industry experts</li>
-          </ul>
-        </div>
-
-        <div class="topic">
-          <div class="icon"><i class="fa-solid fa-comments" style="color:#00b894;"></i></div>
-          <h3>Community & Growth</h3>
-          <ul>
-            <li>Live Q&A sessions</li>
-            <li>Access to exclusive community</li>
-            <li>Post-workshop resources</li>
-          </ul>
+        <div style="flex:1 1 420px; min-width:280px;">
+          <img src="images/hands.jpg" alt="Hands-on workshop session" style="width:100%; height:320px; object-fit:cover; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,0.12);">
         </div>
       </div>
     </div>
@@ -368,7 +363,7 @@
   <section id="workshop-learning">
     <div class="inner">
       <div class="text">
-        <div class="icon"><i class="fa-solid fa-bullseye" style="color:#f04a4a;"></i></div>
+        
         <h2>Engaging, Practical & Real-world Focused</h2>
         <p>Each workshop is structured to blend expert-led insights with real-world practice — ensuring participants leave with actionable outcomes.</p>
         <ul>
